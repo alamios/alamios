@@ -16,47 +16,55 @@ function setLang(lang) {
     addCookie("requestedlang", lang, 365);
 }
 
-function switchLang() {
-    console.log(document.getElementById("main").innerHTML);
-    console.log(document.getElementById("main").innerHTML);
-    var navs = document.getElementsByClassName("nav");
-    if (window.requestedLang.includes("es")) {
-        navs[0].innerHTML = "Inicio";
-        navs[1].innerHTML = "Proyectos";
-        navs[2].innerHTML = "Sobre mi";
-        navs[3].innerHTML = "Contacto";
-        document.getElementById("bio").innerHTML = "Desarrollador de Software y Web<br>\
-            En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
-            no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
-            adarga antigua, rocín flaco y galgo corredor.";
-        document.getElementById("design").innerHTML = "Diseñado por";
-        document.getElementById("about-intro").innerHTML = "Hola!";
-        document.getElementById("about-text").innerHTML = "\
-            En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
-            no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
-            adarga antigua, rocín flaco y galgo corredor.";
-        console.log(document.getElementById("main").innerHTML);
-        console.log(document.getElementById("main").innerHTML);
-    }
-    else {
-        navs[0].innerHTML = "Home";
-        navs[1].innerHTML = "Projects";
-        navs[2].innerHTML = "About";
-        navs[3].innerHTML = "Contact";
-        document.getElementById("bio").innerHTML = "Software and Web developer<br>\
-            In a village of La Mancha, the name of which I have no desire to call to mind,\
-            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
-            an old buckler, a lean hack, and a greyhound for coursing.";
-        document.getElementById("design").innerHTML = "Designed by";
-        document.getElementById("about-intro").innerHTML = "Hello!";
-        document.getElementById("about-text").innerHTML = "\
-            In a village of La Mancha, the name of which I have no desire to call to mind,\
-            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
-            an old buckler, a lean hack, and a greyhound for coursing.";
-    }
-}
-
 function setAndSwitchLang(lang) {
     setLang(lang);
     switchLang();
+}
+
+function switchLang() {
+    if (window.requestedLang.includes("es")) {
+        setTextClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
+        setTextID("bio", "Desarrollador de Software y Web<br>\
+            En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
+            no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
+            adarga antigua, rocín flaco y galgo corredor.");
+        setTextID("design", "Diseñado por");
+        setTextID("about-intro", "Hola!");
+        setTextID("about-text", "\
+            En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
+            no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
+            adarga antigua, rocín flaco y galgo corredor.");
+        setTextID("home-intro", "Inicio");
+        setTextID("projects-intro", "Proyectos");
+    }
+    else {
+        setTextClass("nav", ["Home", "Projects", "About", "Contact"]);
+        setTextID("bio", "\
+            In a village of La Mancha, the name of which I have no desire to call to mind,\
+            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
+            an old buckler, a lean hack, and a greyhound for coursing.");
+        setTextID("design", "Designed by");
+        setTextID("about-intro", "Hello!");
+        setTextID("about-text", "\
+            In a village of La Mancha, the name of which I have no desire to call to mind,\
+            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
+            an old buckler, a lean hack, and a greyhound for coursing.");
+        setTextID("home-intro", "Home");
+        setTextID("projects-intro", "Projects");
+    }
+}
+
+function setTextID(target, text) {
+    var elem = document.getElementById(target);
+    if (elem != null)
+        elem.innerHTML = text;
+}
+
+function setTextClass(targets, texts) {
+    var elems = document.getElementsByClassName(targets);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = texts[i];
+        }
+    }
 }

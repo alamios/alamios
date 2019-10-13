@@ -1,14 +1,8 @@
 function loadTo(target, file) {
-    var result = null;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", file, false);
     xmlhttp.send();
-    XMLHttpRequest.onload = loaded(target, xmlhttp.responseText);
-}
-
-function loaded(target, result) {
-    console.log(target);
-    document.getElementById(target).innerHTML = result;
+    document.getElementById(target).innerHTML = xmlhttp.responseText;
     switchLang();
 }
 
