@@ -1,36 +1,13 @@
-function getLang() {
-    var rqlang = getCookieVal("requestedlang");
-    if (rqlang != null)
-        return rqlang;
-    else if (navigator.languages != undefined) 
-        return navigator.languages[0]; 
-    else if (navigator.language != undefined)
-        return navigator.language;
-    else
-        return "";
-}
-
-function setLang(lang) {
-    lang = lang.toLowerCase();
-    window.requestedLang = lang;
-    addCookie("requestedlang", lang, 365);
-}
-
-function setAndSwitchLang(lang) {
-    setLang(lang);
-    switchLang();
-}
-
 function switchLang() {
     if (window.requestedLang.includes("es")) {
-        setTextClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        setTextID("bio", "Desarrollador de Software y Web<br>\
+        setContentClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
+        setContentID("bio", "Desarrollador de Software y Web<br>\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
             no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
             adarga antigua, rocín flaco y galgo corredor.");
-        setTextID("design", "Diseñado por");
-        setTextID("about-intro", "Hola!");
-        setTextID("about-text", "\
+        setContentID("design", "Diseñado por");
+        setContentID("about-intro", "Hola!");
+        setContentID("about-text", "\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo\
             que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo\
             corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y\
@@ -45,18 +22,18 @@ function switchLang() {
             (que en esto hay alguna diferencia en los autores que deste caso escriben), aunque por\
             conjeturas verosímiles se deja entender que se llama Quijana; pero esto importa poco a\
             nuestro cuento; basta que en la narración dél no se salga un punto de la verdad.");
-        setTextID("home-intro", "Inicio");
-        setTextID("projects-intro", "Proyectos");
+        setContentID("home-intro", "Inicio");
+        setContentID("projects-intro", "Proyectos");
     }
     else {
-        setTextClass("nav", ["Home", "Projects", "About", "Contact"]);
-        setTextID("bio", "Software and Web developer<br>\
+        setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
+        setContentID("bio", "Software and Web developer<br>\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
             there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
             an old buckler, a lean hack, and a greyhound for coursing.");
-        setTextID("design", "Designed by");
-        setTextID("about-intro", "Hello!");
-        setTextID("about-text", "\
+        setContentID("design", "Designed by");
+        setContentID("about-intro", "Hello!");
+        setContentID("about-text", "\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
             there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
             an old buckler, a lean hack, and a greyhound for coursing. An olla of rather more beef\
@@ -72,18 +49,41 @@ function switchLang() {
             authors who write on the subject), although from reasonable conjectures it seems plain\
             that he was called Quexana. This, however, is of but little importance to our tale;\
             it will be enough not to stray a hair’s breadth from the truth in the telling of it.");
-        setTextID("home-intro", "Home");
-        setTextID("projects-intro", "Projects");
+        setContentID("home-intro", "Home");
+        setContentID("projects-intro", "Projects");
     }
 }
 
-function setTextID(target, text) {
+function getLang() {
+    var rqlang = getCookie("requestedLang");
+    if (rqlang != null)
+        return rqlang;
+    else if (navigator.languages != undefined) 
+        return navigator.languages[0]; 
+    else if (navigator.language != undefined)
+        return navigator.language;
+    else
+        return "";
+}
+
+function setLang(lang) {
+    lang = lang.toLowerCase();
+    window.requestedLang = lang;
+    setCookie("requestedLang", lang, 365*24*60*60*1000);
+}
+
+function setSwitchLang(lang) {
+    setLang(lang);
+    switchLang();
+}
+
+function setContentID(target, text) {
     var elem = document.getElementById(target);
     if (elem != null)
         elem.innerHTML = text;
 }
 
-function setTextClass(targets, texts) {
+function setContentClass(targets, texts) {
     var elems = document.getElementsByClassName(targets);
     if (elems != null) {
         for (var i=0; i<elems.length; i++) {

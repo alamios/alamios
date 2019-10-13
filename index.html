@@ -4,11 +4,13 @@
 	<meta charset="UTF-8"/>
 	<link rel="icon" href="images/favicon.png" type="image/png">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
-	<script src="js/lang.js"></script>
 	<script src="js/utils.js"></script>
+	<script src="js/lang.js"></script>
+	<script src="js/functions.js"></script>
 	<script>
 		window.onload = function() {
-			loadInit('html/home.html');
+    		setLang(getLang());
+			loadInit();
 		}
 	</script>
     <title>alamios | Developer</title>
@@ -18,9 +20,9 @@
 		<header id="header">
 			<div id="header-container">
 				<div id="lang">
-						<a href="#" onclick="setAndSwitchLang('es');">
+						<a href="#" onclick="setSwitchLang('es');">
 							<img class="flag" alt="ES" src="images/flags/spain_32.png"></img></a><!--
-						--><a href="#" onclick="setAndSwitchLang('en');"><!--
+						--><a href="#" onclick="setSwitchLang('en');"><!--
 							--><img class="flag" alt="EN" src="images/flags/uk_32.png"></img></a>
 				</div>
 				<nav id="nav">
@@ -31,7 +33,7 @@
 				</nav>
 			</div>
 		</header>
-		<div id="main-container">
+		<div id="body-container">
 			<div id="profile">
 				<div id="profile-container">
 					<div id="avatar-container">

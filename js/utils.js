@@ -1,21 +1,11 @@
-function loadTo(target, file) {
+function loadFileTo(targetID, file) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", file, false);
     xmlhttp.send();
-    document.getElementById(target).innerHTML = xmlhttp.responseText;
-    switchLang();
+    document.getElementById(targetID).innerHTML = xmlhttp.responseText;
 }
 
-function loadDefault(file) {
-    loadTo("main", file);
-}
-
-function loadInit(file) {
-    setLang(getLang());
-    loadDefault(file);
-}
-
-function getCookieVal(name) {
+function getCookie(name) {
     var cookies = document.cookie;
     if (cookies.includes(";")) {
         var carray = cookies.split(";");
@@ -31,9 +21,12 @@ function getCookieVal(name) {
     return null;
 }
 
-function addCookie(name, value, expdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (expdays*24*60*60*1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires;
+function setCookie(name, value, expiration) {
+    var cookie = name + "=" + value;
+    if (expiration != undefined) {
+        var d = new Date();
+        d.setTime(d.getTime() + expiration);
+        cookie += ";" + "expires=" + d.toUTCString();
+    }
+    document.cookie = cookie;
 }
