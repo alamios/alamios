@@ -1,8 +1,8 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: SF Mono, Fira Code, Fira Mono, Roboto Mono, Lucida Console, Monaco, monospace;
-    font-size: 13px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
     color: rgb(224, 224, 224);
 }
 body {
@@ -12,7 +12,7 @@ body {
     --bar-color: rgb(30, 30, 30);
     --profile-color: rgb(25, 25, 25);
     --main-color: rgb(22, 22, 22);
-    --nav-font-size: 18px;
+    --nav-font-size: 20px;
 }
 a {
     font-weight: bold;
@@ -25,9 +25,7 @@ a:hover {
 #header {
     box-shadow: 0px 4px 4px var(--shadow-color);
     position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
+    top: 0; left: 0; right: 0;
 	height: var(--nav-height);
     text-align: right;
     background-color: var(--bar-color);
@@ -57,7 +55,7 @@ a:hover {
 #nav a:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
-#container {
+#main-container {
 	position:absolute;
 	display: flex;
     top: var(--nav-height);

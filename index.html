@@ -15,40 +15,46 @@
 </head>
 <body>
 	<div id="body">
-		<nav id="header">
-			<div id="lang">
-					<a href="#" onclick="setAndSwitchLang('es');">
-						<img class="flag" alt="ES" src="images/flags/spain_32.png"></img></a><!--
-					--><a href="#" onclick="setAndSwitchLang('en');"><!--
-						--><img class="flag" alt="EN" src="images/flags/uk_32.png"></img></a>
-			</div>
-			<div id="nav">
-				<a class="nav" href="#" onclick="loadDefault('html/home.html');"></a><!--
-				--><a class="nav" href="#" onclick="loadDefault('html/projects.html');"></a><!--
-				--><a class="nav" href="#" onclick="loadDefault('html/about.html');"></a><!--
-				--><a class="nav" href="mailto:alamios@protonmail.com"></a>
-			</div>
-		</nav>
-		<div id="container">
-			<div id="profile">
-				<div id="avatar-container">
-					<img id="avatar" src="images/starman1.png"></img>
+		<header id="header">
+			<div id="header-container">
+				<div id="lang">
+						<a href="#" onclick="setAndSwitchLang('es');">
+							<img class="flag" alt="ES" src="images/flags/spain_32.png"></img></a><!--
+						--><a href="#" onclick="setAndSwitchLang('en');"><!--
+							--><img class="flag" alt="EN" src="images/flags/uk_32.png"></img></a>
 				</div>
-				<p id="name">Oscar Alonso Amigo</p>
-				<p id="bio"></p>
-				<div id="socials">
-					<a href="https://github.com/alamios">
-						<img class="social" alt="GitHub" src="images/socials/GitHub-Mark-Light-64px.png"></img>
-					</a>
+				<nav id="nav">
+					<a class="nav" href="#" onclick="loadDefault('html/home.html');"></a><!--
+					--><a class="nav" href="#" onclick="loadDefault('html/projects.html');"></a><!--
+					--><a class="nav" href="#" onclick="loadDefault('html/about.html');"></a><!--
+					--><a class="nav" href="mailto:alamios@protonmail.com"></a>
+				</nav>
+			</div>
+		</header>
+		<div id="main-container">
+			<div id="profile">
+				<div id="profile-container">
+					<div id="avatar-container">
+						<img id="avatar" src="images/starman1.png"></img>
+					</div>
+					<p id="name">Oscar Alonso Amigo</p>
+					<p id="bio"></p>
+					<div id="socials">
+						<a href="https://github.com/alamios">
+							<img class="social" alt="GitHub" src="images/socials/GitHub-Mark-Light-64px.png"></img>
+						</a>
+					</div>
 				</div>
 			</div>
 			<div id="main">
 			</div>
 		</div>
 		<footer id="footer">
-			<p id="design"></p>
-			<a href="https://github.com/alamios/alamios.github.io">alamios</a>
-			<p>&#169; 2019</p>
+			<div id="footer-container">
+				<p id="design"></p>
+				<a href="https://github.com/alamios/alamios.github.io">alamios</a>
+				<p>&#169; 2019</p>
+			</div>
 		</footer>
 	</div>
 </body>

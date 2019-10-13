@@ -1,7 +1,11 @@
-#about p {
-    text-align: center;
+#about-container {  
+    max-width: 600px;
+    position: relative;
+    top: 5%;
+    margin: auto;
 }
 #about-intro {
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
