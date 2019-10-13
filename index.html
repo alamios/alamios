@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<link rel="icon" href="images/fav.png" type="image/png">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+	<link rel="stylesheet" type="text/css" href="css/projects.css">
+	<link rel="stylesheet" type="text/css" href="css/about.css">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/lang.js"></script>
+	<script src="js/utils.js"></script>
+	<script>
+		$(document).ready(function() {
+			loadInit('html/home.html');
+		});
+	</script>
+    <title>alamios | Developer</title>
+</head>
+<body>
+	<div id="body">
+		<nav id="header">
+			<div id="lang">
+					<a href="#" onclick="setAndSwitchLang('es');">
+						<img class="flag" alt="ES" src="images/flags/spain_32.png"></img></a><!--
+					--><a href="#" onclick="setAndSwitchLang('en');"><!--
+						--><img class="flag" alt="EN" src="images/flags/uk_32.png"></img></a>
+			</div>
+			<div id="nav">
+				<a class="nav" href="#" onclick="loadDefault('html/home.html');"></a><!--
+				--><a class="nav" href="#" onclick="loadDefault('html/projects.html');"></a><!--
+				--><a class="nav" href="#" onclick="loadDefault('html/about.html');"></a><!--
+				--><a class="nav" href="mailto:alamios@protonmail.com"></a>
+			</div>
+		</nav>
+		<div id="container">
+			<div id="profile">
+				<div id="avatar-container">
+					<img id="avatar" src="images/starman1.png"></img>
+				</div>
+				<p id="name">Oscar Alonso Amigo</p>
+				<p id="bio"></p>
+				<div id="socials">
+					<a href="https://github.com/alamios">
+						<img class="social" alt="GitHub" src="images/socials/GitHub-Mark-Light-64px.png"></img>
+					</a>
+				</div>
+			</div>
+			<div id="main">
+			</div>
+		</div>
+		<footer id="footer">
+			<p id="design"></p>
+			<a href="https://github.com/alamios/alamios.github.io">alamios</a>
+			<p>&#169; 2019</p>
+		</footer>
+	</div>
+</body>
+</html>
