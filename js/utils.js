@@ -1,10 +1,19 @@
 function loadTo(target, file) {
-    $(target).load(file);
+    var result = null;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", file, false);
+    xmlhttp.send();
+    XMLHttpRequest.onload = loaded(target, xmlhttp.responseText);
+}
+
+function loaded(target, result) {
+    console.log(target);
+    document.getElementById(target).innerHTML = result;
     switchLang();
 }
 
 function loadDefault(file) {
-    loadTo("#main", file);
+    loadTo("main", file);
 }
 
 function loadInit(file) {
