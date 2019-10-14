@@ -12,6 +12,9 @@ function loadInit() {
 function loadDefault(file) {
     loadCommon(defTarget, file);
     storePage(file);
+    if (file == homePage) {
+        execOrbiter();
+    }
 }
 
 function loadCommon(targetID, file) {

@@ -1,7 +1,7 @@
 function switchLang() {
     if (window.requestedLang.includes("es")) {
         setContentClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        setContentID("bio", "Desarrollador de Software y Web<br>\
+        setContentID("bio", "Desarrollador de Software y aprendiz de Web<br>\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
             no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
             adarga antigua, rocín flaco y galgo corredor.");
@@ -27,7 +27,7 @@ function switchLang() {
     }
     else {
         setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
-        setContentID("bio", "Software and Web developer<br>\
+        setContentID("bio", "Software developer and Web learner<br>\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
             there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
             an old buckler, a lean hack, and a greyhound for coursing.");

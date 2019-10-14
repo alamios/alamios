@@ -1,0 +1,12 @@
+#home-container {
+    width: 100%;
+    height: 100%;
+}
+#orbiter-canvas {
+    width: 400px;
+    height: 400px;
+    background-color: lemonchiffon;
+}
+.orbiter-img {
+    display: none;
+}
