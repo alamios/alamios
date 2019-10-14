@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    color: rgb(224, 224, 224);
+}
+body {
+    --nav-height: 60px;
+    --footer-height: 50px;
+    --shadow-color: rgb(20, 20, 20);
+    --bar-color: rgb(30, 30, 30);
+    --profile-color: rgb(25, 25, 25);
+    --main-color: rgb(22, 22, 22);
+    --nav-font-size: 20px;
+}
+a {
+    font-weight: bold;
+    text-decoration: none;
+    outline: 0;
+}
+a:hover {
+    color: rgb(167, 224, 247);
+}
+#body-container {
+	position:absolute;
+	display: flex;
+    top: var(--nav-height);
+    bottom: var(--footer-height);
+    right: 0;
+    left: 0;
+}
+#main {
+    padding: 40px;
+    flex-grow: 1;
+    right: 0px;
+    background-color: var(--main-color);
+    z-index: 4;
+} 

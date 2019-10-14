@@ -4,22 +4,17 @@
 	<meta charset="UTF-8"/>
 	<link rel="icon" href="images/favicon.png" type="image/png">
 	<link rel="stylesheet" type="text/css" href="css/common.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/about.css">
 	
-	<link rel="stylesheet" type="text/css" href="css/profile.css">
-	<link rel="stylesheet" type="text/css" href="css/header.css">
-	<link rel="stylesheet" type="text/css" href="css/footer.css">
 
 	<script src="js/utils.js"></script>
 	<script src="js/lang.js"></script>
 	<script src="js/loader.js"></script>
-	<script src="js/orbiter.js"></script>
 	<script>
 		window.onload = function() {
-			setLang(getLang());
+    		setLang(getLang());
 			loadCommon();
 			switchLang();
-			execOrbiter();
 		}
 	</script>
     <title>alamios | Developer</title>
@@ -32,10 +27,11 @@
 			<div id="profile">
 			</div>
 			<div id="main">
-				<div id="home-container">
-					<img class="orbiter-img" id="i1" src="images/orbiter/i1.png"/>
-					<img class="orbiter-img" id="i2" src="images/orbiter/i2.png"/>
-					<canvas id="orbiter-canvas" width="400" height="400"></canvas>
+				<div id="about-container">
+					<div id="about">
+						<p id="about-intro"></p>
+						<p id="about-text"></p>
+					</div>
 				</div>
 			</div>
 		</div>

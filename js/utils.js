@@ -1,8 +1,16 @@
+function loadTo(targetID, content) {
+    document.getElementById(targetID).innerHTML = content;
+}
+
 function loadFileTo(targetID, file) {
+    loadTo(targetID, loadFile(file));
+}
+
+function loadFile(file) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", file, false);
     xmlhttp.send();
-    document.getElementById(targetID).innerHTML = xmlhttp.responseText;
+    return xmlhttp.responseText;
 }
 
 function getCookie(name) {

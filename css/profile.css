@@ -1,0 +1,40 @@
+#profile {
+    width: 350px;
+    min-width: 350px;
+    padding: 0 30px;
+    box-shadow: 3px 0px 4px var(--shadow-color);
+    text-align: center;
+    background-color: var(--profile-color);
+    z-index: 5;
+} 
+#avatar-container {  
+    margin: 70px auto 0px;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    border-style: 3px solid;
+    border-color: white;
+}
+#avatar {
+    margin-left: -120px;
+    width: auto;
+    height: 100%;
+}
+#name {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#bio {
+    margin-top: 15px;
+}
+#socials {
+    margin-top: 50px;
+}
+.social {
+    width: 48px;
+    height: auto;
+}
