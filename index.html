@@ -2,12 +2,12 @@
 <html>
 <head>
 	<meta charset="UTF-8"/>
-	<link rel="icon" href="images/favicon.png" type="image/png">
+	<link rel="icon" href="img/favicon.png" type="image/png">
 	<link rel="stylesheet" type="text/css" href="css/common.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script src="js/utils.js"></script>
 	<script src="js/lang.js"></script>
 	<script src="js/orbiter.js"></script>
@@ -18,10 +18,10 @@
 			loadTextTo("profile", "html/profile.html");
 			loadTextTo("footer", "html/footer.html");
 			switchLang();
-			setTimeout(execOrbiter, 500);
+			setTimeout(execOrbiter, 100);
 		}
 	</script>
-    <title>alamios | Developer</title>
+    <title id="home-title">alamios</title>
 </head>
 <body>
 	<div id="body">
@@ -32,9 +32,9 @@
 			</div>
 			<div id="main">
 				<div id="home-container">
-					<img class="orbiter-img" id="i1" src="images/orbiter/i1.png"/>
-					<img class="orbiter-img" id="i2" src="images/orbiter/i2.png"/>
-					<canvas id="orbiter-canvas" width="400" height="400"></canvas>
+					<img class="orbiter-img" id="i1" src="img/orbiter/i1.png"/>
+					<img class="orbiter-img" id="i2" src="img/orbiter/i2.png"/>
+					<canvas id="orbiter-canvas"></canvas>
 				</div>
 			</div>
 		</div>

@@ -1,9 +1,5 @@
-function setTextTo(targetID, content) {
-    document.getElementById(targetID).innerHTML = content;
-}
-
 function loadTextTo(targetID, file) {
-    setTextTo(targetID, loadText(file));
+    document.getElementById(targetID).innerHTML = loadText(file);
 }
 
 function loadText(file) {

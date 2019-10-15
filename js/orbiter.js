@@ -38,20 +38,10 @@ class Astro {
     }
 }
 class Universe {
-    constructor(gravity, size, speed) {
+    constructor(gravity, size, astros) {
         this.gravity = gravity;
-        this.size = AU*size;
-        this.speed = speed;
-        var cx = this.size/2;
-        var cy = this.size/2;
-        this.astros = [
-            new Astro("Sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
-            new Astro("Mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
-            new Astro("Venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
-            new Astro("Earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
-            new Astro("Mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)];
-
-        //var tesla = new Astro("Tesla", 1235, 1.5);
+        this.size = size;
+        this.astros = astros;
     }
     interact() {
         for (var i=0; i<this.astros.length-1; i++) {
@@ -64,45 +54,73 @@ class Universe {
         }
     } 
 }
-
-function calcPPP() {
-    return 2.0e9;
-}
-
-function draw(canvas, images, universe) {				
-    var ctxt = canvas.getContext('2d');
-    ctxt.clearRect(0, 0, canvas.width, canvas.height);
-    //console.log(canvas.width);
-    //console.log(canvas.height);
-    var r = [10, 5, 5, 5, 5];                       // Esto sobra, hay que calcula el radio segun el tamaño real excepto para el sol
-    var ppp = calcPPP();                            // Hay que hacer la funcion calcPPP en funcion del tamaño del canvas
-    for (var i=0; i<universe.astros.length; i++) {
-        ctxt.drawImage(images[i],
-            universe.astros[i].x/ppp, 
-            universe.astros[i].y/ppp, 
-            r[i], r[i]);
+class ExecParams {
+    constructor(canvas, images, speed, planetRatio, sunRatio, carRatio) {
+        this.canvas = canvas;
+        this.images = images;
+        this.speed = speed;
+        this.planetRatio = planetRatio;
+        this.sunRatio = sunRatio;
+        this.carRatio = carRatio;
     }
 }
 
-function step(canvas, images, universe) {
-    for (var z=0; z<universe.speed; z++) {
+function draw(universe, params) {				
+    var ctxt = params.canvas.getContext('2d');
+    ctxt.clearRect(0, 0, params.canvas.width, params.canvas.height);
+    var smaller = params.canvas.parentElement.clientWidth;
+    if (smaller > params.canvas.parentElement.clientHeight)
+        smaller = params.canvas.parentElement.clientHeight;
+    params.canvas.width = smaller;
+    params.canvas.height = smaller;
+    params.canvas.style.width = smaller + "px";
+    params.canvas.style.height = smaller + "px";                    
+    var unippp = universe.size / smaller;   
+    var planetppp = unippp / params.planetRatio;
+    var sunppp = unippp / params.sunRatio;
+    var carppp = unippp / params.carRatio;
+    for (var i=0; i<universe.astros.length; i++) {
+        if (universe.astros[i].name == "Sun") 
+            rad = universe.astros[i].radius / sunppp;
+        else if (universe.astros[i].name == "Tesla")
+            rad = universe.astros[i].radius / carppp;
+        else 
+            rad = universe.astros[i].radius / planetppp;
+        ctxt.drawImage(params.images[i],
+            universe.astros[i].x / unippp, 
+            universe.astros[i].y / unippp, 
+            rad, rad);
+    }
+}
+
+function step(universe, params) {
+    for (var z=0; z<params.speed; z++) {
         universe.interact();
     }
-    draw(canvas, images, universe);
-}
-
-function loadImages(imageIDs) {
-    var imgs = [];
-    for (var i=0; i<imageIDs.length; i++) {
-        imgs[i] = document.getElementById(imageIDs[i]);
-    }
-    return imgs;
+    draw(universe, params);
 }
 
 function execOrbiter() {
-    const canvas = document.getElementById("orbiter-canvas");
-    var images = loadImages(["i1", "i2", "i2", "i2", "i2"]);
-    var universe = new Universe(6.67428e-11, 6, 100000);
-    setInterval(step, 1, canvas, images, universe);
+    var canvas = document.getElementById("orbiter-canvas");
+    var imgids = ["i1", "i2", "i2", "i2", "i2"];
+    var imgs = [];
+    for (var i=0; i<imgids.length; i++) 
+        imgs[i] = document.getElementById(imgids[i]);
+    var params = new ExecParams(canvas, imgs, 10000, 2000, 50, 1);
+
+    var size = 4 * AU;
+    var cx = size/2;
+    var cy = size/2;
+    var universe = new Universe(6.67428e-11, size, [
+        new Astro("Sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
+        new Astro("Mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
+        new Astro("Venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
+        new Astro("Earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
+        new Astro("Mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)]);
+
+    //new Astro("Tesla", 1235, 1.5)
+    //new Astro("Luna")
+
+    setInterval(step, 1, universe, params);
 }
 

@@ -1,5 +1,8 @@
 function switchLang() {
     if (window.requestedLang.includes("es")) {
+        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Desarrollador");
+        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Proyectos");
+        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Sobre mi");
         setContentClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
         setContentID("bio", "Desarrollador de Software y aprendiz de Web<br>\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
@@ -26,6 +29,9 @@ function switchLang() {
         setContentID("projects-intro", "Proyectos");
     }
     else {
+        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Developer");
+        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Projects");
+        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;About");
         setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
         setContentID("bio", "Software developer and Web learner<br>\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
