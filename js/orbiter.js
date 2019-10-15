@@ -81,15 +81,16 @@ function draw(universe, params) {
     var carppp = unippp / params.carRatio;
     for (var i=0; i<universe.astros.length; i++) {
         if (universe.astros[i].name == "Sun") 
-            rad = universe.astros[i].radius / sunppp;
+            var diam = universe.astros[i].radius / sunppp;
         else if (universe.astros[i].name == "Tesla")
-            rad = universe.astros[i].radius / carppp;
+            var diam = universe.astros[i].radius / carppp;
         else 
-            rad = universe.astros[i].radius / planetppp;
+            var diam = universe.astros[i].radius / planetppp;
+        var rad = diam / 2;
         ctxt.drawImage(params.images[i],
-            universe.astros[i].x / unippp, 
-            universe.astros[i].y / unippp, 
-            rad, rad);
+            universe.astros[i].x / unippp - rad, 
+            universe.astros[i].y / unippp - rad, 
+            diam, diam);
     }
 }
 
