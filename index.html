@@ -13,12 +13,8 @@
 	<script src="js/orbiter.js"></script>
 	<script>
 		window.onload = function() {
-			setLang(getLang());
-			loadTextTo("header", "html/header.html");
-			loadTextTo("profile", "html/profile.html");
-			loadTextTo("footer", "html/footer.html");
-			switchLang();
-			setTimeout(execOrbiter, 100);
+			loadPage();
+			execOrbiter();
 		}
 	</script>
     <title id="home-title">alamios</title>

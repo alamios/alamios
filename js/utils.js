@@ -1,3 +1,10 @@
+function loadPage() {
+    loadTextTo("header", "html/header.html");
+    loadTextTo("profile", "html/profile.html");
+    loadTextTo("footer", "html/footer.html");
+    setLang(getLang());
+}
+
 function loadTextTo(targetID, file) {
     document.getElementById(targetID).innerHTML = loadText(file);
 }

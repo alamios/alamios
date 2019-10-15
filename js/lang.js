@@ -76,10 +76,6 @@ function setLang(lang) {
     lang = lang.toLowerCase();
     window.requestedLang = lang;
     setCookie("requestedLang", lang, 365*24*60*60*1000);
-}
-
-function setSwitchLang(lang) {
-    setLang(lang);
     switchLang();
 }
 
