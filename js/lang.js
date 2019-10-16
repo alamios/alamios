@@ -95,13 +95,11 @@ function switchLangCredits() {
 
 function toggleLang(lang) {
     setLang(lang);
-    var currPage = document.body.id;
-    switch (currPage) {
+    switch (document.body.id) {
         case "home-page":
             switchLangCommon();
             switchLangHome();
-            var currMain = document.getElementById("main").children[0].id;
-            switch (currMain) {
+            switch (document.getElementById("main").children[0].id) {
                 case "orbiter-container":
                     switchLangOrbiter();
                     break;
