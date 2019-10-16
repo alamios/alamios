@@ -1,15 +1,36 @@
-function loadPage() {
-    loadTextTo("header", "html/header.html");
-    loadTextTo("profile", "html/profile.html");
-    loadTextTo("footer", "html/footer.html");
-    setLang(getLang());
+function loadCommon() {
+    loadHTMLTo("header", "html/header.html");
+    loadHTMLTo("profile", "html/profile.html");
+    loadHTMLTo("footer", "html/footer.html");
+    switchLangCommon();
 }
 
-function loadTextTo(targetID, file) {
-    document.getElementById(targetID).innerHTML = loadText(file);
+function loadOrbiter() {
+    loadHTMLTo("main", "html/orbiter.html");
+    switchLangOrbiter();
+    execOrbiter();
 }
 
-function loadText(file) {
+function setHomeEvents() {
+    var container = document.getElementById("main");
+    container.addEventListener('dblclick', function(evt) {
+        if (window.getSelection)
+            window.getSelection().removeAllRanges();
+        if (document.fullscreenElement != null)
+            closeFullscreen();
+        else
+            openFullscreen();
+    });
+    container.addEventListener('contextmenu', function(evt) {
+        // evt.preventDefault();
+    });
+}
+
+function loadHTMLTo(targetID, file) {
+    document.getElementById(targetID).innerHTML = loadHTML(file);
+}
+
+function loadHTML(file) {
     var req = new XMLHttpRequest();
     req.open("GET", file, false);
     req.send();
@@ -40,4 +61,27 @@ function setCookie(name, value, expiration) {
         cookie += ";" + "expires=" + d.toUTCString();
     }
     document.cookie = cookie;
+}
+
+function openFullscreen() {
+    var elem = document.documentElement;
+    if (elem.requestFullscreen)
+        elem.requestFullscreen();
+    else if (elem.mozRequestFullScreen)
+        elem.mozRequestFullScreen();
+    else if (elem.webkitRequestFullscreen)
+        elem.webkitRequestFullscreen();
+    else if (elem.msRequestFullscreen)
+        elem.msRequestFullscreen();
+}
+
+function closeFullscreen() {
+    if (document.exitFullscreen)
+        document.exitFullscreen();
+    else if (document.mozCancelFullScreen)
+        document.mozCancelFullScreen();
+    else if (document.webkitExitFullscreen)
+        document.webkitExitFullscreen();
+    else if (document.msExitFullscreen)
+        document.msExitFullscreen();
 }

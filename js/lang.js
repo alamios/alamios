@@ -1,14 +1,45 @@
-function switchLang() {
+function switchLangCommon() {
     if (window.requestedLang.includes("es")) {
-        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Desarrollador");
-        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Proyectos");
-        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Sobre mi");
         setContentClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        setContentID("bio", "Desarrollador de Software y aprendiz de Web<br>\
-            En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
-            no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
-            adarga antigua, rocín flaco y galgo corredor.");
+        // setContentID("bio", "Desarrollador de Software y aprendiz de Web<br>\
+        //     En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
+        //     no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
+        //     adarga antigua, rocín flaco y galgo corredor.");
         setContentID("design", "Diseñado por");
+    }
+    else {
+        setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
+        setContentID("bio", "Software developer and Web learner<br>\
+            In a village of La Mancha, the name of which I have no desire to call to mind,\
+            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
+            an old buckler, a lean hack, and a greyhound for coursing.");
+        setContentID("design", "Designed by");
+    }
+}
+
+function switchLangHome() {
+    if (window.requestedLang.includes("es")) {
+        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Inicio");
+    }
+    else {
+        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Home");
+    }
+}
+
+function switchLangProjects() {
+    if (window.requestedLang.includes("es")) {
+        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Proyectos");
+        setContentID("projects-intro", "Proyectos");
+    }
+    else {
+        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Projects");
+        setContentID("projects-intro", "Projects");
+    }
+}
+
+function switchLangAbout() {
+    if (window.requestedLang.includes("es")) {
+        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Sobre mi");
         setContentID("about-intro", "Hola!");
         setContentID("about-text", "\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo\
@@ -25,19 +56,9 @@ function switchLang() {
             (que en esto hay alguna diferencia en los autores que deste caso escriben), aunque por\
             conjeturas verosímiles se deja entender que se llama Quijana; pero esto importa poco a\
             nuestro cuento; basta que en la narración dél no se salga un punto de la verdad.");
-        setContentID("home-intro", "Inicio");
-        setContentID("projects-intro", "Proyectos");
     }
     else {
-        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Developer");
-        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Projects");
         setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;About");
-        setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
-        setContentID("bio", "Software developer and Web learner<br>\
-            In a village of La Mancha, the name of which I have no desire to call to mind,\
-            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
-            an old buckler, a lean hack, and a greyhound for coursing.");
-        setContentID("design", "Designed by");
         setContentID("about-intro", "Hello!");
         setContentID("about-text", "\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
@@ -55,8 +76,48 @@ function switchLang() {
             authors who write on the subject), although from reasonable conjectures it seems plain\
             that he was called Quexana. This, however, is of but little importance to our tale;\
             it will be enough not to stray a hair’s breadth from the truth in the telling of it.");
-        setContentID("home-intro", "Home");
-        setContentID("projects-intro", "Projects");
+    }
+}
+
+function switchLangOrbiter() {
+    if (window.requestedLang.includes("es")) {
+    }
+    else {
+    }
+}
+
+function switchLangCredits() {
+    if (window.requestedLang.includes("es")) {
+    }
+    else {
+    }
+}
+
+function toggleLang(lang) {
+    setLang(lang);
+    var currPage = document.body.id;
+    switch (currPage) {
+        case "home-page":
+            switchLangCommon();
+            switchLangHome();
+            var currMain = document.getElementById("main").children[0].id;
+            switch (currMain) {
+                case "orbiter-container":
+                    switchLangOrbiter();
+                    break;
+            }
+            break;
+        case "projects-page":
+            switchLangCommon();
+            switchLangProjects();
+            break;
+        case "about-page":
+            switchLangCommon();
+            switchLangAbout();
+            break;
+        case "credits-page":
+            switchLangCredits();
+            break;   
     }
 }
 
@@ -76,7 +137,6 @@ function setLang(lang) {
     lang = lang.toLowerCase();
     window.requestedLang = lang;
     setCookie("requestedLang", lang, 365*24*60*60*1000);
-    switchLang();
 }
 
 function setContentID(target, text) {

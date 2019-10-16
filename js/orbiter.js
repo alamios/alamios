@@ -65,7 +65,7 @@ class ExecParams {
 
 function draw(universe, params) {				
     var ctxt = params.canvas.getContext('2d');
-    ctxt.clearRect(0, 0, params.canvas.width, params.canvas.height);
+    // ctxt.clearRect(0, 0, params.canvas.width, params.canvas.height);
     var smaller = params.canvas.parentElement.clientWidth;
     if (smaller > params.canvas.parentElement.clientHeight)
         smaller = params.canvas.parentElement.clientHeight;
@@ -107,7 +107,7 @@ function execOrbiter() {
         imgs[i] = document.getElementById(imgids[i]);
     var params = new ExecParams(canvas, imgs, [30, 1500, 1000000], 10000);
 
-    var size = 4 * AU;
+    var size = 3.5 * AU;
     var cx = size/2;
     var cy = size/2;
     var universe = new Universe(6.67428e-11, size, [

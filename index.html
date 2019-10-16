@@ -8,18 +8,22 @@
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/orbiter.css">
 	<script src="js/utils.js"></script>
 	<script src="js/lang.js"></script>
 	<script src="js/orbiter.js"></script>
 	<script>
 		window.onload = function() {
-			loadPage();
-			execOrbiter();
+    		setLang(getLang());
+			loadCommon();
+			loadOrbiter();
+			switchLangHome();
+			setHomeEvents();
 		}
 	</script>
     <title id="home-title">alamios</title>
 </head>
-<body>
+<body id="home-page">
 	<div id="body">
 		<header id="header">
 		</header>
@@ -27,11 +31,6 @@
 			<div id="profile">
 			</div>
 			<div id="main">
-				<div id="home-container">
-					<img class="orbiter-img" id="i1" src="img/orbiter/i1.png"/>
-					<img class="orbiter-img" id="i2" src="img/orbiter/i2.png"/>
-					<canvas id="orbiter-canvas"></canvas>
-				</div>
 			</div>
 		</div>
 		<footer id="footer">

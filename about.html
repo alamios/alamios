@@ -12,12 +12,14 @@
 	<script src="js/lang.js"></script>
 	<script>
 		window.onload = function() {
-			loadPage();
+    		setLang(getLang());
+			loadCommon();
+			switchLangAbout();
 		}
 	</script>
     <title id="about-title">alamios</title>
 </head>
-<body>
+<body id="about-page">
 	<div id="body">
 		<header id="header">
 		</header>
