@@ -53,26 +53,24 @@ class Universe {
     } 
 }
 class Orbiter {
-    constructor(universe, canvas, images, ratios, speed) {
+    constructor(universe, canvas, dpatts, ratios, speed) {
         this.universe = universe;
         this.canvas = canvas;
         this.ctxt = this.canvas.getContext('2d');
-        this.images = [];
-        for (var i=0; i<images.length; i++) 
-            this.images[i] = document.getElementById(images[i]);
+        this.dpatts = dpatts;
         this.ratios = ratios;
         this.speed = speed;
-        this.draw = this.draw.bind(this);
         this.running = false;
+        this.resize();
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (var i=0; i<this.universe.astros.length; i++) {
-            var rad = this.sizes[i+1]
-            var diam = rad * 2;
+            var rad = this.sizes[i+1];
+            var diam = Math.round(rad * 2);
             this.ctxt.drawImage(this.images[i],
-                this.universe.astros[i].x / this.sizes[0] - rad, 
-                this.universe.astros[i].y / this.sizes[0] - rad, 
+                Math.round(this.universe.astros[i].x / this.sizes[0] - rad), 
+                Math.round(this.universe.astros[i].y / this.sizes[0] - rad), 
                 diam, diam);
         }	
     }
@@ -95,13 +93,25 @@ class Orbiter {
         var mppp = unippp / this.ratios[1];  
         var sppp = unippp / this.ratios[2];  
         this.sizes = [unippp];
+        this.images = [];
         for (var i=0; i<this.universe.astros.length; i++) {
-            if (this.universe.astros[i].name.startsWith("l")) 
+            if (this.dpatts[i+1][0] == 0) 
                 this.sizes[i+1] = this.universe.astros[i].radius / lppp;
-            else if (this.universe.astros[i].name.startsWith("m"))
+            else if (this.dpatts[i+1][0] == 1)
                 this.sizes[i+1] = this.universe.astros[i].radius / mppp;
             else 
                 this.sizes[i+1] = this.universe.astros[i].radius / sppp;
+            this.images[i] = new Image();
+            var size = Math.round(this.sizes[i+1] * 2);
+            var done = false;
+            while (!done) {
+                var path = this.dpatts[i+1][1].replace(this.dpatts[0], size);
+                if (urlExists(path)) {
+                    this.images[i].src = path;
+                    done = true;
+                }
+                size++;
+            }
         }
     }
     start() {
@@ -119,21 +129,24 @@ function initOrbiter() {
     var cx = size/2;
     var cy = size/2;
     var universe = new Universe(6.67428e-11, size, [
-        new Astro("l-Sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
-        new Astro("m-Mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
-        new Astro("m-Venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
-        new Astro("m-Earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
-        new Astro("m-Mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)]);
+        new Astro("Sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
+        new Astro("Mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
+        new Astro("Venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
+        new Astro("Earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
+        new Astro("Mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)]);
     //new Astro("s-Tesla", 1235, 1.5)
-    //new Astro("m-Moon")
 
     var canvas = document.getElementById("orbiter-canvas");
-    var imgids = ["i1", "i2", "i2", "i2", "i2"];
+    var dpatts = ["[s]",
+        [0, "img/orbiter/sun/sun11_[s]_3.png"],
+        [1, "img/orbiter/mercury/mercury_[s]_3.png"],
+        [1, "img/orbiter/venus/venus1_[s]_3.png"], 
+        [1, "img/orbiter/earth/earth_[s]_3.png"], 
+        [1, "img/orbiter/mars/mars3_[s]_3.png"]];
     var ratios = [30, 1500, 1000000];
-    var speed = 10000;
+    var speed = 5000;
 
-    var orbiter = new Orbiter(universe, canvas, imgids, ratios, speed);
-    orbiter.resize();
+    var orbiter = new Orbiter(universe, canvas, dpatts, ratios, speed);
     return orbiter;
 }
  
