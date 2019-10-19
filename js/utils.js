@@ -1,37 +1,53 @@
 function loadCommon() {
-    loadHTMLTo("header", "html/header.html");
-    loadHTMLTo("profile", "html/profile.html");
-    loadHTMLTo("footer", "html/footer.html");
+    replaceHTML("header", "html/header.html");
+    replaceHTML("profile", "html/profile.html");
+    replaceHTML("footer", "html/footer.html");
     switchLangCommon();
 }
 
 function loadOrbiter() {
-    loadHTMLTo("main", "html/orbiter.html");
-    orbiter = initSolarSystem();
+    insertHTML("main", "html/orbiter.html");
     switchLangOrbiter();
-    return orbiter;
+    return document.getElementById("orbiter").children[0];
 }
 
 function setupShowcase() {
-    orbiter = loadOrbiter();
-    orbiter.start();
-    var container = document.getElementById("main");
-    container.addEventListener('dblclick', function(evt) {
-        if (window.getSelection)
-            window.getSelection().removeAllRanges();
-        if (document.fullscreenElement != null)
-            closeFullscreen();
-        else
-            openFullscreen();
-    });
-    container.addEventListener('contextmenu', function(evt) {
-        evt.preventDefault();
-        if (orbiter.running) 
-            orbiter.stop();
-        else
-            orbiter.start();
-    });
+    var eventElems = [loadOrbiter()];
+    var scElems = [initSolarSystem(), initSystem()];
+    var scCurrent = randomVal(scElems.length);
+    scElems[scCurrent].show();
+
+    for (var i=0; i<eventElems.length; i++) {
+        eventElems[i].addEventListener('dblclick', function(evt) {
+            if (window.getSelection)
+                window.getSelection().removeAllRanges();
+            if (document.fullscreenElement != null)
+                closeFullscreen();
+            else
+                openFullscreen();
+        });
+        eventElems[i].addEventListener('contextmenu', function(evt) {
+            evt.preventDefault();
+            scElems[scCurrent].hide();
+            scCurrent = nextVal(scCurrent, scElems.length-1);
+            scElems[scCurrent].show();
+        });
+    }
     window.addEventListener('resize', function(evt) {
-        orbiter.resize();
+        scElems[scCurrent].resize();
     });
+    var creditlinks = document.querySelectorAll(".credit-link, .credit-goback");
+    for (var i=0; i<creditlinks.length; i++) {
+        creditlinks[i].addEventListener('click', function(evt) {
+            scElems[scCurrent].toggleCredits();
+        });
+    }
+}
+
+function nextVal(current, max) {
+    return (current < max) ? current + 1 : 0;
+}
+
+function randomVal(size) {
+    return Math.floor(Math.random() * size);
 }

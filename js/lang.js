@@ -1,47 +1,43 @@
 function switchLangCommon() {
     if (window.requestedLang.includes("es")) {
-        setContentClass("nav", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        // setContentID("bio", "Desarrollador de Software y aprendiz de Web<br>\
-        //     En un lugar de la Mancha, de cuyo nombre no quiero acordarme,\
-        //     no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,\
-        //     adarga antigua, rocín flaco y galgo corredor.");
+        setContentSelection("#header .nav-item", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
+        setContentID("bio1", "Desarrollador de Software y aprendiz de Web");
+        setContentID("bio2", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
         setContentID("design", "Diseñado por");
     }
     else {
-        setContentClass("nav", ["Home", "Projects", "About", "Contact"]);
-        setContentID("bio", "Software developer and Web learner<br>\
-            In a village of La Mancha, the name of which I have no desire to call to mind,\
-            there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
-            an old buckler, a lean hack, and a greyhound for coursing.");
+        setContentSelection("#header .nav-item", ["Home", "Projects", "About", "Contact"]);
+        setContentID("bio1", "Software developer and Web learner");
+        setContentID("bio2", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
         setContentID("design", "Designed by");
     }
 }
 
 function switchLangHome() {
     if (window.requestedLang.includes("es")) {
-        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Inicio");
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Inicio");
     }
     else {
-        setContentID("home-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Home");
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Home");
     }
 }
 
 function switchLangProjects() {
     if (window.requestedLang.includes("es")) {
-        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Proyectos");
-        setContentID("projects-intro", "Proyectos");
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Proyectos");
+        setContentSelection("#projects .intro", "Proyectos");
     }
     else {
-        setContentID("projects-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Projects");
-        setContentID("projects-intro", "Projects");
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Projects");
+        setContentSelection("#projects .intro", "Projects");
     }
 }
 
 function switchLangAbout() {
     if (window.requestedLang.includes("es")) {
-        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Sobre mi");
-        setContentID("about-intro", "Hola!");
-        setContentID("about-text", "\
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;Sobre mi");
+        setContentSelection("#about .intro", "Hola!");
+        setContentSelection("#about .text", "\
             En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo\
             que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo\
             corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y\
@@ -58,9 +54,9 @@ function switchLangAbout() {
             nuestro cuento; basta que en la narración dél no se salga un punto de la verdad.");
     }
     else {
-        setContentID("about-title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;About");
-        setContentID("about-intro", "Hello!");
-        setContentID("about-text", "\
+        setContentName("title", "alamios&nbsp;&nbsp;|&nbsp;&nbsp;About");
+        setContentSelection("#about .intro", "Hello!");
+        setContentSelection("#about .text", "\
             In a village of La Mancha, the name of which I have no desire to call to mind,\
             there lived not long since one of those gentlemen that keep a lance in the lance-rack,\
             an old buckler, a lean hack, and a greyhound for coursing. An olla of rather more beef\
@@ -81,31 +77,10 @@ function switchLangAbout() {
 
 function switchLangOrbiter() {
     if (window.requestedLang.includes("es")) {
-        setContentID("credit-link", "Creditos");
-        setContentID("sun", "Sol");
-        setContentID("mercury", "Mercurio");
-        setContentID("venus", "Venus");
-        setContentID("earth", "Tierra");
-        setContentID("mars", "Marte");
-        setContentID("starman", "Starman");
+        setContentSelection("#orbiter .credit-link", "Creditos");
     }
     else {
-        setContentID("credit-link", "Credits");
-        setContentID("sun", "Sun");
-        setContentID("mercury", "Mercury");
-        setContentID("venus", "Venus");
-        setContentID("earth", "Earth");
-        setContentID("mars", "Mars");
-        setContentID("starman", "Starman");
-    }
-}
-
-function switchLangCredits() {
-    if (window.requestedLang.includes("es")) {
-        setContentID("about-title", "Creditos Orbiter");
-    }
-    else {
-        setContentID("about-title", "Orbiter credits");
+        setContentSelection("#orbiter .credit-link", "Credits");
     }
 }
 
@@ -115,11 +90,7 @@ function toggleLang(lang) {
         case "home-page":
             switchLangCommon();
             switchLangHome();
-            switch (document.getElementById("main").children[0].id) {
-                case "orbiter-container":
-                    switchLangOrbiter();
-                    break;
-            }
+            switchLangOrbiter();
             break;
         case "projects-page":
             switchLangCommon();
@@ -129,9 +100,6 @@ function toggleLang(lang) {
             switchLangCommon();
             switchLangAbout();
             break;
-        case "credits-page":
-            switchLangCredits();
-            break;   
     }
 }
 
@@ -159,11 +127,29 @@ function setContentID(target, text) {
         elem.innerHTML = text;
 }
 
-function setContentClass(targets, texts) {
-    var elems = document.getElementsByClassName(targets);
+function setContentClass(target, text) {
+    var elems = document.getElementsByClassName(target);
     if (elems != null) {
         for (var i=0; i<elems.length; i++) {
-            elems[i].innerHTML = texts[i];
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
+        }
+    }
+}
+
+function setContentName(target, text) {
+    var elems = document.getElementsByTagName(target);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
+        }
+    }
+}
+
+function setContentSelection(target, text) {
+    var elems = document.querySelectorAll(target);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
         }
     }
 }

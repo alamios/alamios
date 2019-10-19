@@ -5,8 +5,13 @@ function urlExists(url) {
     return http.status!=404;
 }
 
-function loadHTMLTo(targetID, file) {
+function replaceHTML(targetID, file) {
     document.getElementById(targetID).innerHTML = loadHTML(file);
+}
+
+function insertHTML(targetID, file) {
+    var target = document.getElementById(targetID);
+    target.innerHTML = target.innerHTML + loadHTML(file);
 }
 
 function loadHTML(file) {
