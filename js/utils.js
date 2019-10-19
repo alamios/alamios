@@ -7,8 +7,8 @@ function loadCommon() {
 
 function loadOrbiter() {
     loadHTMLTo("main", "html/orbiter.html");
+    orbiter = initSolarSystem();
     switchLangOrbiter();
-    orbiter = initOrbiter();
     return orbiter;
 }
 

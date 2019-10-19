@@ -55,7 +55,9 @@ function openFullscreen() {
 }
 
 function closeFullscreen() {
-    if (document.exitFullscreen)
+    if (document.cancelFullScreen)
+        document.cancelFullScreen();
+    else if (document.exitFullscreen)
         document.exitFullscreen();
     else if (document.mozCancelFullScreen)
         document.mozCancelFullScreen();

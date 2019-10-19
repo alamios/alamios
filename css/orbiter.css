@@ -1,3 +1,6 @@
+#main {
+    padding: 0px;
+}
 #orbiter-container {
     width: 100%;
     height: 100%;
@@ -9,6 +12,61 @@
     position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
 }
-.orbiter-img {
-    display: none;
+#orbiter-info {
+    margin: 0 7px 4px;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+}
+#orbiter-info * {
+    display: inline;
+    font-size: 12px;
+    color: rgb(141, 141, 141);
+}
+#orbiter-info #credit-link {
+    position: relative;
+    float: right;
+    position: absolute;
+    bottom: 0; right: 0;
+}
+#orbiter-credits-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+}
+#orbiter-credits-container .credit-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+#orbiter-credits-container .credit-elem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid rgb(41, 41, 41);
+    border-radius: 5px;
+}
+#orbiter-credits-container .credit-elem:first-child {
+    margin-right: 20px;
+}
+#orbiter-credits-container .credit-img {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+#orbiter-credits-container .credit-txt {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin-left: 20px;
+}
+#orbiter-credits-container .credit-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+#credit-goback {
+    font-size: 20px;
 }

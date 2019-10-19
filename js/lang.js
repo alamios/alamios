@@ -81,15 +81,31 @@ function switchLangAbout() {
 
 function switchLangOrbiter() {
     if (window.requestedLang.includes("es")) {
+        setContentID("credit-link", "Creditos");
+        setContentID("sun", "Sol");
+        setContentID("mercury", "Mercurio");
+        setContentID("venus", "Venus");
+        setContentID("earth", "Tierra");
+        setContentID("mars", "Marte");
+        setContentID("starman", "Starman");
     }
     else {
+        setContentID("credit-link", "Credits");
+        setContentID("sun", "Sun");
+        setContentID("mercury", "Mercury");
+        setContentID("venus", "Venus");
+        setContentID("earth", "Earth");
+        setContentID("mars", "Mars");
+        setContentID("starman", "Starman");
     }
 }
 
 function switchLangCredits() {
     if (window.requestedLang.includes("es")) {
+        setContentID("about-title", "Creditos Orbiter");
     }
     else {
+        setContentID("about-title", "Orbiter credits");
     }
 }
 

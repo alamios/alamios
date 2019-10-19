@@ -19,7 +19,10 @@
     line-height: var(--nav-height);
 }
 #lang a {
-    margin: 4px;
+    margin-right: 8px;
+}
+#lang a:last-child {
+    margin-right: 0;
 }
 .flag {
     width: 20px;

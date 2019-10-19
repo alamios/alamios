@@ -87,20 +87,12 @@ class Orbiter {
         this.canvas.width = smaller;
         this.canvas.height = smaller;
         this.canvas.style.width = smaller + "px";
-        this.canvas.style.height = smaller + "px";                    
-        var unippp = this.universe.size / smaller;   
-        var lppp = unippp / this.ratios[0];  
-        var mppp = unippp / this.ratios[1];  
-        var sppp = unippp / this.ratios[2];  
-        this.sizes = [unippp];
+        this.canvas.style.height = smaller + "px";          
+        this.sizes = [this.universe.size / smaller];
         this.images = [];
         for (var i=0; i<this.universe.astros.length; i++) {
-            if (this.dpatts[i+1][0] == 0) 
-                this.sizes[i+1] = this.universe.astros[i].radius / lppp;
-            else if (this.dpatts[i+1][0] == 1)
-                this.sizes[i+1] = this.universe.astros[i].radius / mppp;
-            else 
-                this.sizes[i+1] = this.universe.astros[i].radius / sppp;
+            var zoom = this.ratios[this.dpatts[i+1][0]];
+            this.sizes[i+1] = this.universe.astros[i].radius * zoom / this.sizes[0];
             this.images[i] = new Image();
             var size = Math.round(this.sizes[i+1] * 2);
             var done = false;
@@ -124,27 +116,68 @@ class Orbiter {
     }
 }
 
-function initOrbiter() {
+function addOrbiterInfo(astros, ratios, dpatts) {
+    var info = document.getElementById("orbiter-info");
+    var last = document.getElementById("credits-link");
+    for (var i=0; i<astros.length; i++) {
+        var pname = document.createElement("p");
+        pname.setAttribute("id", astros[i].name);
+        pname.innerHTML = astros[i].name;
+        var pzoom = document.createElement("p");
+        pzoom.setAttribute("id", astros[i].name + "-zoom");
+        pzoom.innerHTML = ratios[dpatts[i+1][0]];    
+        var px = document.createElement("p");
+        px.innerHTML = "&nbsp;x";
+        info.insertBefore(pname, last);
+        info.insertBefore(px, last);
+        info.insertBefore(pzoom, last);
+        if (i < astros.length-1) {
+            var psep = document.createElement("p");
+            psep.innerHTML = ((i<astros.length-1)? "&nbsp;|&nbsp;":"");
+            info.insertBefore(psep, last);
+        }
+    }
+}
+
+function toggleOrbiterCredits() {
+    var credits = document.getElementById("orbiter-credits-container");
+    var orbiter = document.getElementById("orbiter-container");
+    if (credits.style.display == "none") {
+        credits.style.display = "block";
+        orbiter.style.display = "none";
+    }
+    else {
+        credits.style.display = "none";
+        orbiter.style.display = "block";
+    }
+}
+
+function initSolarSystem() {
     var size = 3.5 * AU;
     var cx = size/2;
     var cy = size/2;
-    var universe = new Universe(6.67428e-11, size, [
-        new Astro("Sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
-        new Astro("Mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
-        new Astro("Venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
-        new Astro("Earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
-        new Astro("Mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)]);
+    var astros = [
+        new Astro("sun", 1.9891e30, 6.96e8, cx, cy, 0, 0),
+        new Astro("mercury", 3.302e23, 2.4397e6, cx, cy+AU*0.4679210985588, 39000, 4500),
+        new Astro("venus", 4.869e24, 6.0518e6, cx-AU*0.72333199, cy, 0, 35021.4),
+        new Astro("earth", 5.9736e24, 6.371e6, cx, cy-AU, -29780, 0),
+        new Astro("mars", 6.4185e23, 3.3972e6, cx+AU*1.66579911087, cy, -700, -22000)];
     //new Astro("s-Tesla", 1235, 1.5)
+    var universe = new Universe(6.67428e-11, size, astros);
 
     var canvas = document.getElementById("orbiter-canvas");
     var dpatts = ["[s]",
-        [0, "img/orbiter/sun/sun11_[s]_3.png"],
-        [1, "img/orbiter/mercury/mercury_[s]_3.png"],
-        [1, "img/orbiter/venus/venus1_[s]_3.png"], 
-        [1, "img/orbiter/earth/earth_[s]_3.png"], 
-        [1, "img/orbiter/mars/mars3_[s]_3.png"]];
+        [0, "img/orbiter/sun/sun1_[s].png"],
+        [1, "img/orbiter/mercury/mercury_[s].png"],
+        [1, "img/orbiter/venus/venus_[s].png"], 
+        [1, "img/orbiter/earth/earth_[s].png"], 
+        [1, "img/orbiter/mars/mars_[s].png"],
+        [2, "img/orbiter/starman/starman_[s].png"]];
     var ratios = [30, 1500, 1000000];
-    var speed = 5000;
+    var speed = 10000;
+    
+    addOrbiterInfo(astros, ratios, dpatts);
+    document.getElementById("orbiter-credits-container").style.display = "none";
 
     var orbiter = new Orbiter(universe, canvas, dpatts, ratios, speed);
     return orbiter;
