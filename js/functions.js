@@ -2,7 +2,7 @@ function urlExists(url) {
     var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
     http.send();
-    return http.status!=404;
+    return http.status != 404;
 }
 
 function replaceHTML(targetID, file) {
@@ -21,30 +21,56 @@ function loadHTML(file) {
     return req.responseText;
 }
 
-function getCookie(name) {
+function storePersistent(key, value, expiration) {
+    if (localStorage) {
+        localStorage.setItem(key, value);
+    } 
+    else {
+        var cookie = key + "=" + value;
+        if (expiration == undefined)
+            expiration = 365*24*60*60*1000;
+        var d = new Date();
+        d.setTime(d.getTime() + expiration);
+        cookie += ";" + "expires=" + d.toUTCString();
+        document.cookie = cookie;
+    }
+}
+
+function retrievePersistent(key) {
+    if (localStorage)
+        return localStorage.getItem(key);
+    else
+        return parseCookie(key);
+}
+
+function storeSession(key, value) {
+    if (sessionStorage)
+        sessionStorage.setItem(key, value);
+    else
+        document.cookie = key + "=" + value;
+}
+
+function retrieveSession(key) {
+    if (sessionStorage)
+        return sessionStorage.getItem(key);
+    else
+        return parseCookie(key);
+}
+
+function parseCookie(key) {
     var cookies = document.cookie;
     if (cookies.includes(";")) {
         var carray = cookies.split(";");
         for (var i=0; i<carray.length; i++) {
-            if (carray[i].includes(name)) {
+            if (carray[i].includes(key)) {
                 return carray[i].split("=")[1];
             }
         }
     }
-    else if (cookies.includes(name)) {
+    else if (cookies.includes(key)) {
         return cookies.split("=")[1];
     }
-    return null;
-}
-
-function setCookie(name, value, expiration) {
-    var cookie = name + "=" + value;
-    if (expiration != undefined) {
-        var d = new Date();
-        d.setTime(d.getTime() + expiration);
-        cookie += ";" + "expires=" + d.toUTCString();
-    }
-    document.cookie = cookie;
+    return undefined;
 }
 
 function openFullscreen() {
@@ -115,4 +141,22 @@ function createBlob(canvas) {
         newImage.src = url;
 	});
     return newImage;
+}
+
+// Source: https://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser/5918791#5918791
+function getBrowser() {
+    var ua = navigator.userAgent, tem, 
+        M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return {name:'IE',version:(tem[1] || '')};
+    }
+    if(M[1]=== 'Chrome'){
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem != null) return {name:tem[1].replace('OPR', 'Opera'),version:tem[2]};
+    }
+    M = M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem = ua.match(/version\/(\d+)/i))!= null)
+        M.splice(1, 1, tem[1]);
+    return {name:M[0], version:M[1]};
 }

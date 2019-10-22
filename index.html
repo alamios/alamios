@@ -14,9 +14,8 @@
 	<script src="js/utils.js"></script>
 	<script src="js/orbiter.js"></script>
 	<script>
-		window.onload = function() {
-    		setLang(getLang());
-			loadCommon();
+		window.onload = function() {   
+			initPage();
 			switchLangHome();
 			setupShowcase();
 		}
@@ -24,17 +23,15 @@
     <title>alamios</title>
 </head>
 <body id="home-page">
-	<div id="container">
-		<div id="header">
-		</div>
-		<div id="body">
-			<div id="profile">
-			</div>
-			<div id="main">
-			</div>
-		</div>
-		<div id="footer">
-		</div>
+	<header id="header" class="row">
+	</header>
+	<div id="body" class="row">
+		<aside id="profile">
+		</aside>
+		<main id="main">
+		</main>
 	</div>
+	<footer id="footer" class="row">
+	</footer>
 </body>
 </html>

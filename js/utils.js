@@ -1,3 +1,11 @@
+function initPage() {
+    setLang(getLang());
+    var bname = getBrowser().name.toLowerCase();
+    if (bname == "ie")
+        alert(errorMessage());
+    loadCommon();
+}
+
 function loadCommon() {
     replaceHTML("header", "html/header.html");
     replaceHTML("profile", "html/profile.html");
@@ -28,9 +36,7 @@ function setupShowcase() {
         });
         eventElems[i].addEventListener('contextmenu', function(evt) {
             evt.preventDefault();
-            scElems[scCurrent].hide();
-            scCurrent = nextVal(scCurrent, scElems.length-1);
-            scElems[scCurrent].show();
+            scCurrent = toggleShowcase(scElems, scCurrent);
         });
     }
     window.addEventListener('resize', function(evt) {
@@ -42,6 +48,13 @@ function setupShowcase() {
             scElems[scCurrent].toggleCredits();
         });
     }
+}
+
+function toggleShowcase(scElems, scCurrent) {
+    scElems[scCurrent].hide();
+    scCurrent = nextVal(scCurrent, scElems.length-1);
+    scElems[scCurrent].show();
+    return scCurrent;
 }
 
 function nextVal(current, max) {

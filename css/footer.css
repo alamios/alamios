@@ -1,14 +1,9 @@
 #footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    height: var(--footer-height);
     background-color: var(--bar-color);
     box-shadow: 0px -4px 4px var(--shadow-color);
-    z-index: 10;
+    z-index: 3;
 }   
 #footer p {
     line-height: var(--footer-height);
-    display: inline-block;
+    display: inline;
 }

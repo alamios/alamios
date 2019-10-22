@@ -13,29 +13,26 @@
 	<script src="js/utils.js"></script>
 	<script>
 		window.onload = function() {
-    		setLang(getLang());
-			loadCommon();
+			initPage();
 			switchLangAbout();
 		}
 	</script>
     <title>alamios</title>
 </head>
 <body id="about-page">
-	<div id="container">
-		<div id="header">
-		</div>
-		<div id="body">
-			<div id="profile">
+	<header id="header">
+	</header>
+	<div id="body">
+		<aside id="profile">
+		</aside>
+		<main id="main">
+			<div id="about">
+				<p class="intro"></p>
+				<p class="text"></p>
 			</div>
-			<div id="main">
-				<div id="about">
-					<p class="intro"></p>
-					<p class="text"></p>
-				</div>
-			</div>
-		</div>
-		<div id="footer">
-		</div>
+		</main>
 	</div>
+	<footer id="footer">
+	</footer>
 </body>
 </html>
