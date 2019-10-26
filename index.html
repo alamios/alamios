@@ -4,34 +4,53 @@
 	<meta charset="UTF-8"/>
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="css/common.css">
-	<link rel="stylesheet" type="text/css" href="css/profile.css">
-	<link rel="stylesheet" type="text/css" href="css/header.css">
-	<link rel="stylesheet" type="text/css" href="css/footer.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/showcase.css">
+	<link rel="stylesheet" type="text/css" href="css/about.css">
+	<link rel="stylesheet" type="text/css" href="css/projects.css">
 	<link rel="stylesheet" type="text/css" href="css/orbiter.css">
-	<script src="js/functions.js"></script>
-	<script src="js/lang.js"></script>
-	<script src="js/utils.js"></script>
-	<script src="js/orbiter.js"></script>
-	<script>
-		window.onload = function() {   
-			initPage();
-			switchLangHome();
-			setupShowcase();
-		}
-	</script>
+	<script defer src="js/functions.js"></script>
+	<script defer src="js/lang.js"></script>
+	<script defer src="js/orbiter.js"></script>
+	<script defer src="js/utils.js"></script>
     <title>alamios</title>
 </head>
-<body id="home-page">
-	<header id="header" class="row">
-	</header>
-	<div id="body" class="row">
-		<aside id="profile">
-		</aside>
+<body>
+	<article id="profile">
+		<div id="avatar">
+			<img src="img/starman_medium.png"></img>
+		</div>
+		<p id="name">Oscar Alonso Amigo</p>
+		<p id="bio"></p>
+		<div id="socials">
+			<a href="https://github.com/alamios">
+				<img class="social" alt="GitHub" src="img/social/GitHub-Mark-Light-64px.png"></img>
+			</a>
+		</div>
+	</article>
+	<div id="body">
+		<header id="header">
+			<div id="lang">
+				<a onclick="toggleLang('es');" href="javascript:void(0);">
+					<img class="flag" alt="ES" src="img/lang/flags/spain_32.png"></img></a><!--
+				--><a onclick="toggleLang('en');" href="javascript:void(0);"><!--
+					--><img class="flag" alt="EN" src="img/lang/flags/uk_32.png"></img></a>
+			</div>
+			<nav id="nav">
+				<a class="nav-item" onclick="togglePage('home');" href="javascript:void(0);"></a>
+				<a class="nav-item" onclick="togglePage('projects');" href="javascript:void(0);"></a><!--
+				--><a class="nav-item" onclick="togglePage('about');" href="javascript:void(0);"></a><!--
+				--><a class="nav-item" href="mailto:alamios@protonmail.com"></a>
+			</nav>
+		</header>
 		<main id="main">
 		</main>
+		<footer id="footer">
+			<div id="copyright">
+				<span id="design"></span>
+				<a href="https://github.com/alamios/alamios.github.io">alamios</a>
+				<span>&#169; 2019</span>
+			</div>
+		</footer>
 	</div>
-	<footer id="footer" class="row">
-	</footer>
 </body>
 </html>

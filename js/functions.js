@@ -160,3 +160,36 @@ function getBrowser() {
         M.splice(1, 1, tem[1]);
     return {name:M[0], version:M[1]};
 }
+
+function setContentID(target, text) {
+    var elem = document.getElementById(target);
+    if (elem != null)
+        elem.innerHTML = text;
+}
+
+function setContentClass(target, text) {
+    var elems = document.getElementsByClassName(target);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
+        }
+    }
+}
+
+function setContentName(target, text) {
+    var elems = document.getElementsByTagName(target);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
+        }
+    }
+}
+
+function setContentSelection(target, text) {
+    var elems = document.querySelectorAll(target);
+    if (elems != null) {
+        for (var i=0; i<elems.length; i++) {
+            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
+        }
+    }
+}

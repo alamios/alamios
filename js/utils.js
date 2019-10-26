@@ -1,66 +1,71 @@
-function initPage() {
-    setLang(getLang());
-    var bname = getBrowser().name.toLowerCase();
-    if (bname == "ie")
-        alert(errorMessage());
-    loadCommon();
-}
+var bname = getBrowser().name.toLowerCase();
+if (bname == "ie")
+    alert(errorMessage());
 
-function loadCommon() {
-    replaceHTML("header", "html/header.html");
-    replaceHTML("profile", "html/profile.html");
-    replaceHTML("footer", "html/footer.html");
-    switchLangCommon();
-}
+var scElems = [solarSystem, testSystem];
+var scIndex = randomIndex();
+var scCurrent = undefined;
 
-function loadOrbiter() {
-    insertHTML("main", "html/orbiter.html");
-    switchLangOrbiter();
-    return document.getElementById("orbiter").children[0];
-}
+togglePage(retrieveSession('currpage'));
 
-function setupShowcase() {
-    var eventElems = [loadOrbiter()];
-    var scElems = [initSolarSystem(), initSystem()];
-    var scCurrent = randomVal(scElems.length);
-    scElems[scCurrent].show();
 
-    for (var i=0; i<eventElems.length; i++) {
-        eventElems[i].addEventListener('dblclick', function(evt) {
-            if (window.getSelection)
-                window.getSelection().removeAllRanges();
-            if (document.fullscreenElement != null)
-                closeFullscreen();
-            else
-                openFullscreen();
-        });
-        eventElems[i].addEventListener('contextmenu', function(evt) {
-            evt.preventDefault();
-            scCurrent = toggleShowcase(scElems, scCurrent);
-        });
+function togglePage(page) {
+    stopShowcase();
+    switch (page) {
+        case "projects":
+            replaceHTML("main", "html/projects.html");
+            break;
+        case "about":
+            replaceHTML("main", "html/about.html");
+            break;
+        default:
+            toggleShowcase();
     }
-    window.addEventListener('resize', function(evt) {
-        scElems[scCurrent].resize();
+    toggleLang();
+    storeSession("currpage", page);
+}
+
+function toggleShowcase() {
+    switch (scElems[scIndex]) {
+        case solarSystem:
+            replaceHTML("main", "html/orbiter.html");
+            break;
+        case testSystem:
+            replaceHTML("main", "html/orbiter.html");
+            break;
+    }
+    scCurrent = scElems[scIndex]();
+    scCurrent.display.addEventListener('dblclick', function(evt) {
+        if (window.getSelection)
+            window.getSelection().removeAllRanges();
+        if (document.fullscreenElement != null)
+            closeFullscreen();
+        else
+            openFullscreen();
     });
-    var creditlinks = document.querySelectorAll(".credit-link, .credit-goback");
-    for (var i=0; i<creditlinks.length; i++) {
-        creditlinks[i].addEventListener('click', function(evt) {
-            scElems[scCurrent].toggleCredits();
-        });
+    scCurrent.display.addEventListener('contextmenu', function(evt) {
+        evt.preventDefault();
+        stopShowcase();
+        toggleShowcase();
+    });
+    window.addEventListener('resize', function(evt) {
+        scCurrent.resize();
+    });
+    scCurrent.start();
+}
+
+function stopShowcase() {
+    if (scCurrent != undefined) {
+        scCurrent.stop();
+        scIndex = nextIndex();
+        scCurrent = undefined;
     }
 }
 
-function toggleShowcase(scElems, scCurrent) {
-    scElems[scCurrent].hide();
-    scCurrent = nextVal(scCurrent, scElems.length-1);
-    scElems[scCurrent].show();
-    return scCurrent;
+function nextIndex() {
+    return (scIndex < scElems.length-1) ? scIndex + 1 : 0;
 }
 
-function nextVal(current, max) {
-    return (current < max) ? current + 1 : 0;
-}
-
-function randomVal(size) {
-    return Math.floor(Math.random() * size);
+function randomIndex() {
+    return Math.floor(Math.random() * scElems.length);
 }

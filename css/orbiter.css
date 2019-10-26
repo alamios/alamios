@@ -20,13 +20,13 @@
 }
 #orbiter .info * {
     display: inline;
-    font-size: 12px;
+    font-size: 0.9rem;
+    font-weight: normal;
     color: rgb(141, 141, 141);
 }
 #orbiter .info .credit {
     position: relative;
     float: right;
-    position: absolute;
     bottom: 0; right: 0;
 }
 #orbiter .credits {  
@@ -78,7 +78,7 @@
     display: block;
 }
 #orbiter .credits .credit-goback {
-    font-size: 20px;
+    font-size: 1.6rem;
 }
 :-moz-full-screen #orbiter .credit-link {
     display: none;

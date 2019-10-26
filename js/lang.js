@@ -1,14 +1,12 @@
 function switchLangCommon() {
     if (window.rqlang == "es") {
         setContentSelection("#header .nav-item", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        setContentID("bio1", "Desarrollador de Software y aprendiz de Web");
-        setContentID("bio2", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
+        setContentID("bio", "Desarrollador de Software y aprendiz de Web");
         setContentID("design", "Diseñado por");
     }
     else {
         setContentSelection("#header .nav-item", ["Home", "Projects", "About", "Contact"]);
-        setContentID("bio1", "Software developer and Web learner");
-        setContentID("bio2", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
+        setContentID("bio", "Software developer and Web learner");
         setContentID("design", "Designed by");
     }
 }
@@ -127,8 +125,9 @@ function switchLangAbout() {
             surname was Quixada or Quesada (for here there is some difference of opinion among the\
             authors who write on the subject), although from reasonable conjectures it seems plain\
             that he was called Quexana. This, however, is of but little importance to our tale;\
-            it will be enough not to stray a hair’s breadth from the truth in the telling of it.");
-    }
+            it will be enough not to stray a hair’s breadth from the truth in the telling of it.");            
+    }            
+    setContentSelection("#about .tags", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
 }
 
 function switchLangOrbiter() {
@@ -162,21 +161,25 @@ function errorMessage() {
 }
 
 function toggleLang(lang) {
+    if (lang == undefined)
+        lang = getLang();
     setLang(lang);
-    switch (document.body.id) {
-        case "home-page":
-            switchLangCommon();
-            switchLangHome();
-            switchLangOrbiter();
-            break;
-        case "projects-page":
-            switchLangCommon();
+    switchLangCommon();
+    var content = document.getElementById("main").firstChild.id;
+    switch (content) {
+        case "projects":
             switchLangProjects();
             break;
-        case "about-page":
-            switchLangCommon();
+        case "about":
             switchLangAbout();
             break;
+        default:
+            switchLangHome();
+            switch (content) {
+                case "orbiter":
+                    switchLangOrbiter();
+                    break;
+            }
     }
 }
 
@@ -195,37 +198,4 @@ function setLang(lang) {
     lang = lang.substring(0, 2);
     window.rqlang = lang;
     storeSession("rqlang", lang);
-}
-
-function setContentID(target, text) {
-    var elem = document.getElementById(target);
-    if (elem != null)
-        elem.innerHTML = text;
-}
-
-function setContentClass(target, text) {
-    var elems = document.getElementsByClassName(target);
-    if (elems != null) {
-        for (var i=0; i<elems.length; i++) {
-            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
-        }
-    }
-}
-
-function setContentName(target, text) {
-    var elems = document.getElementsByTagName(target);
-    if (elems != null) {
-        for (var i=0; i<elems.length; i++) {
-            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
-        }
-    }
-}
-
-function setContentSelection(target, text) {
-    var elems = document.querySelectorAll(target);
-    if (elems != null) {
-        for (var i=0; i<elems.length; i++) {
-            elems[i].innerHTML = (Array.isArray(text)) ? text[i] : text;
-        }
-    }
 }
