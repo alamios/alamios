@@ -8,11 +8,13 @@
     padding: 0;
     font-family: Consolas, "Courier New", monospace;
     color: rgb(211, 211, 211);
+}
+:root {
     --shadow-color: rgb(20, 20, 20);
     --bar-color: rgb(26, 26, 26);
-    --profile-color: rgb(30, 30, 30);
+    --profile-color: rgb(29, 29, 29);
     --main-color: rgb(22, 22, 22);
-    --profile-width: 300px;
+    --profile-width: 350px;
 }
 html, body {
     min-height: 100%;
@@ -30,21 +32,56 @@ a:hover {
 
 /*
  *
- * Bodies
+ * Profile
  *
  */
-body {
-    /* display: flex;
-    flex-flow: row nowrap; */
-}
-#body {
-    /* flex: 0 0 500px; */
-    position: absolute;
-    left: 400px;
-    right: 0;
-    height: 100%;
+#profile {
+    position: fixed;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
+    text-align: center;
+    width: var(--profile-width);
+    height: 100%;
+    background-color: var(--profile-color);
+    box-shadow: 3px 0px 4px var(--shadow-color);
+    z-index: 4;
+}
+#profile > * {
+    margin: 0 30px;
+}
+#avatar img {
+    width: 250px;
+    height: auto;
+}
+#name {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+#bio {
+    margin-top: 20px;
+}
+#socials {
+    margin-top: 50px;
+}
+.social {
+    width: 48px;
+    height: auto;
+}
+
+/*
+ *
+ * Body
+ *
+ */
+#body {
+    display: flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    left: var(--profile-width);
+    right: 0;
+    height: 100%;
 }
 
 /*
@@ -54,62 +91,10 @@ body {
  */
 #main {
     flex: 1;
-    /* position: fixed;
-    left: 400px;
-    width: 1000px; */
+    display: flex;  
+    align-items: stretch;
     background-color: var(--main-color);
     z-index: 1;
-}
-
-/*
- *
- * Profile
- *
- */
-#profile {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    position: fixed;
-    width: var(--profile-width);
-    /* top: 90px;
-    bottom: 80px; */
-    height: 100%;
-    /* flex: 0 0 var(--profile-width); */
-    padding: 0 50px;
-    box-shadow: 3px 0px 4px var(--shadow-color);
-    text-align: center;
-    background-color: var(--profile-color);
-    z-index: 4;
-} 
-#avatar {  
-    margin: 0 auto;
-    min-width: 200px;
-    min-height: 200px;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 50%;
-}
-#avatar img {
-    margin-left: -120px;
-    width: auto;
-    height: 100%;
-}
-#name {
-    margin-top: 10px;
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-#bio {
-    margin-top: 10px;
-}
-#socials {
-    margin-top: 35px;
-}
-.social {
-    width: 48px;
-    height: auto;
 }
 
 /*
@@ -136,6 +121,7 @@ body {
 .flag {
     width: 20px;
     height: auto;
+    vertical-align: middle;
 }
 #nav {
     flex: 1;
@@ -145,6 +131,7 @@ body {
     font-size: 1.5rem;
     line-height: 19px;
     padding: 20px 15px;
+    white-space: nowrap;
 }
 #nav a:hover {
     background-color: rgba(0, 0, 0, 0.2);

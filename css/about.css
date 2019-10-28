@@ -1,15 +1,29 @@
 #about {  
-    max-width: 600px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    max-width: 800px;
     margin: auto;
-    padding: 40px;
+    padding: 30px 20px;
+}
+#about article {
+    flex: 1;
+    display: flex;
+    flex-flow: column wrap;
+}
+#about aside {
+    flex: 0 0 250px;
 }
 #about .intro {
-    margin-bottom: 10px;
+}
+#about .text {
+    margin-top: 10px;
+    line-height: 1.4;
 }
 #about .tags {
+    display: none;
     font-weight: bold;
     font-size: 1.1rem;
-    margin: 25px auto 0;
     padding: 6px;
     border-radius: 3px;
     border: 1px solid;

@@ -2,7 +2,7 @@ var bname = getBrowser().name.toLowerCase();
 if (bname == "ie")
     alert(errorMessage());
 
-var scElems = [solarSystem, testSystem];
+var scElems = [solarSystem, solarSystemStarman];
 var scIndex = randomIndex();
 var scCurrent = undefined;
 
@@ -10,7 +10,7 @@ togglePage(retrieveSession('currpage'));
 
 
 function togglePage(page) {
-    stopShowcase();
+    nextShowcase();
     switch (page) {
         case "projects":
             replaceHTML("main", "html/projects.html");
@@ -30,7 +30,7 @@ function toggleShowcase() {
         case solarSystem:
             replaceHTML("main", "html/orbiter.html");
             break;
-        case testSystem:
+        case solarSystemStarman:
             replaceHTML("main", "html/orbiter.html");
             break;
     }
@@ -45,8 +45,7 @@ function toggleShowcase() {
     });
     scCurrent.display.addEventListener('contextmenu', function(evt) {
         evt.preventDefault();
-        stopShowcase();
-        toggleShowcase();
+        togglePage("home");
     });
     window.addEventListener('resize', function(evt) {
         scCurrent.resize();
@@ -54,7 +53,7 @@ function toggleShowcase() {
     scCurrent.start();
 }
 
-function stopShowcase() {
+function nextShowcase() {
     if (scCurrent != undefined) {
         scCurrent.stop();
         scIndex = nextIndex();

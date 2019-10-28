@@ -1,34 +1,39 @@
-#main {
-    padding: 0px;
-}
-#orbiter,
+/*
+ *
+ * Display
+ *
+ */
+ #orbiter,
 #orbiter .display {
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
 }
 #orbiter .canvas {
-    display: block;
-    margin: auto;
-    position: absolute;
+    position: absolute; 
     top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto;
 }
 #orbiter .info {
-    margin: 0 7px 4px;
     position: absolute;
     bottom: 0; left: 0; right: 0;
+    margin: 0 7px 4px;
 }
 #orbiter .info * {
-    display: inline;
     font-size: 0.9rem;
     font-weight: normal;
     color: rgb(141, 141, 141);
 }
-#orbiter .info .credit {
-    position: relative;
-    float: right;
+#orbiter .info .credit-link {
+    position: absolute;
     bottom: 0; right: 0;
 }
+
+/*
+ *
+ * Credits
+ *
+ */
 #orbiter .credits {  
     padding: 20px;
 }
@@ -80,6 +85,12 @@
 #orbiter .credits .credit-goback {
     font-size: 1.6rem;
 }
+
+/*
+ *
+ * Fullscreen
+ *
+ */
 :-moz-full-screen #orbiter .credit-link {
     display: none;
 }

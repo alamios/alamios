@@ -127,7 +127,6 @@ function switchLangAbout() {
             that he was called Quexana. This, however, is of but little importance to our tale;\
             it will be enough not to stray a hair’s breadth from the truth in the telling of it.");            
     }            
-    setContentSelection("#about .tags", "Java&nbsp; JavaScript&nbsp; PHP&nbsp; HTML&nbsp; CSS&nbsp; Python&nbsp; MySQL&nbsp; Git&nbsp; Gradle&nbsp; Android");
 }
 
 function switchLangOrbiter() {
