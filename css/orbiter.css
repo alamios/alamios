@@ -24,9 +24,11 @@
     font-weight: normal;
     color: rgb(141, 141, 141);
 }
+#orbiter .info .system {
+    float: left;
+}
 #orbiter .info .credit-link {
-    position: absolute;
-    bottom: 0; right: 0;
+    float: right;
 }
 
 /*

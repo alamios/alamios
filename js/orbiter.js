@@ -64,52 +64,66 @@ class Universe {
 }
 
 class Orbiter {
-    constructor(universe, dpatts, ratios, speed) {
+    constructor(universe, dpatts, ratios, stepreps, stepinterval) {
         this.universe = universe;
         this.dpatts = dpatts;
         this.ratios = ratios;
-        this.speed = speed;
-        this.running = false;
+        this.stepreps = stepreps;
+        this.stepinterval = stepinterval;
+        this.running = false;    
+        this.sizes = [];
+        this.images = [];
+        this.speed = stepreps * (1000 / stepinterval);
+        this.date = new Date(Date.UTC(2020, 1));
+        this.dateFn = (this.speed > 86400) ? dateToString : fullDateToString;
 
         this.container = document.getElementById("orbiter");
         this.display = document.querySelectorAll("#orbiter .display")[0];
         this.credits = document.querySelectorAll("#orbiter .credits")[0];
         this.canvas = document.querySelectorAll("#orbiter .canvas")[0];
         this.ctxt = this.canvas.getContext('2d');
-        this.credits.style.display = "none";
+        this.sysdate = document.createElement("span");
 
         var info = document.querySelectorAll("#orbiter .system")[0];
-        var sysinfo = document.createElement("span");
+        var sysinfo1 = document.createElement("span");
+        var sysinfo2 = document.createElement("span");
         var sysname = document.createElement("span");
-        sysname.innerHTML = universe.name.replace(new RegExp("-", "g"), " ");
-
-        var startsep = document.createElement("span");
-        startsep.innerHTML = " [ ";
-        var endsep = document.createElement("span");
-        endsep.innerHTML = " ]";
-        var astrosep = document.createElement("span");
-        astrosep.innerHTML = " | ";
+        var sysspeed = document.createElement("span");
+        var sysdate = document.createElement("span");
+        var sep = document.createElement("span");
         var xsep = document.createElement("span");
+        
+        sysname.innerHTML = universe.name.replace(new RegExp("-", "g"), " ");
+        sysspeed.innerHTML = " Speed x" + this.speed;
+        sysdate.innerHTML = " Date ";
+        sep.innerHTML = " | ";
         xsep.innerHTML = " x";
 
-        info.append(sysinfo);
-        sysinfo.append(sysname);
-        sysinfo.append(startsep);
+        info.append(sysinfo1);
+        info.append(document.createElement("br"));
+        info.append(sysinfo2);
+        sysinfo1.append(sysname);
+        sysinfo1.append(sep.cloneNode(true));
+        sysinfo1.append(sysspeed);
+        sysinfo1.append(sep.cloneNode(true));
+        sysinfo1.append(sysdate);
+        sysinfo1.append(this.sysdate);
+
         for (var i=0; i<universe.astros.length; i++) {
             var astroname = document.createElement("span");
-            astroname.innerHTML = universe.astros[i].name.replace(new RegExp("-", "g"), " ");
             var astrozoom = document.createElement("span");
+            astroname.innerHTML = universe.astros[i].name.replace(new RegExp("-", "g"), " ");
             astrozoom.innerHTML = ratios[dpatts[i+1][0]];    
             
-            sysinfo.append(astroname);
-            sysinfo.append(xsep.cloneNode(true));
-            sysinfo.append(astrozoom);
+            sysinfo2.append(astroname);
+            sysinfo2.append(xsep.cloneNode(true));
+            sysinfo2.append(astrozoom);
             if (i < universe.astros.length-1) {
-                sysinfo.append(astrosep.cloneNode(true));
+                sysinfo2.append(sep.cloneNode(true));
             }
         }
-        sysinfo.append(endsep);
 
+        this.credits.style.display = "none";
         var creditlink = document.querySelectorAll("#orbiter .credit-link");
         creditlink[0].addEventListener('click', function(evt) {
             this.stop();
@@ -135,10 +149,12 @@ class Orbiter {
         }	
     }
     step() {
-        for (var z=0; z<this.speed; z++) {
+        for (var z=0; z<this.stepreps; z++) {
             this.universe.interact();
         }
         this.draw();
+        this.sysdate.innerHTML = this.dateFn(this.date);
+        this.date.setSeconds(this.date.getSeconds() + this.stepreps);
     }
     resize() {
         var smaller = this.canvas.parentElement.clientWidth;
@@ -148,8 +164,7 @@ class Orbiter {
         this.canvas.height = smaller;
         this.canvas.style.width = smaller + "px";
         this.canvas.style.height = smaller + "px";          
-        this.sizes = [this.universe.size / smaller];
-        this.images = [];
+        this.sizes[0] = [this.universe.size / smaller];
         for (var i=0; i<this.universe.astros.length; i++) {
             var zoom = this.ratios[this.dpatts[i+1][0]];
             this.sizes[i+1] = this.universe.astros[i].radius * zoom / this.sizes[0];
@@ -163,7 +178,7 @@ class Orbiter {
                     done = true;
                 }
                 else if (size > this.dpatts[0][1]) {
-                    this.images[i].src = this.dpatts[i+1][1].replace(this.dpatts[0][0], 0);
+                    this.images[i].src = this.dpatts[i+1][1].replace(this.dpatts[0][0], this.dpatts[0][1]);
                     done = true;
                 }
                 size++;
@@ -172,13 +187,36 @@ class Orbiter {
     }
     start() {
         this.resize();
-        this.interval = setInterval(() => this.step(), 1);
+        this.interval = setInterval(() => this.step(), this.stepinterval);
         this.running = true;
     }
     stop() {
         clearInterval(this.interval);
         this.running = false;
     }
+}
+
+function solarSystem() {
+    var size = 3.5 * AU;
+    var cx = size/2;
+    var cy = size/2;
+    var astros = [
+        new Astro("Sun", 1.9885e30, 6.957e8, cx-5.682653841092885E+08, cy+1.112997165528592E+09, -1.446153643855376E-05, -3.447507130430867E-06),
+        new Astro("Mercury", 3.302e23, 2.440e6, cx-1.004302793346122E+10, cy-6.782848247285485E+10, 3.847265155592926E+04, -4.158689546981208E+03),
+        new Astro("Venus", 4.8685e24, 6.05184e6, cx+1.076209595805564E+11, cy+8.974122818036491E+09, -2.693485084259549E+03, 3.476650462014290E+04),
+        new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
+        new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04)];
+    var universe = new Universe("Solar-System", 6.67428e-11, size, astros);
+    var dpatts = [["[s]", 500],
+        [0, "img/orbiter/sun/sun1_[s].png"],
+        [1, "img/orbiter/mercury/mercury_[s].png"],
+        [1, "img/orbiter/venus/venus_[s].png"], 
+        [1, "img/orbiter/earth/earth_[s].png"], 
+        [1, "img/orbiter/mars/mars_[s].png"]];
+    var ratios = [30, 1500];
+    var stepreps = 20000;
+    var stepinterval = 10;
+    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
 }
 
 function solarSystemStarman() {
@@ -193,7 +231,6 @@ function solarSystemStarman() {
         new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04),
         new Astro("Starman", 1.305e3, 1.974, cx-6.364150296583878E+10, cy-1.996812140241804E+11, 2.064456758866443E+04, -1.283240781976068E+04)];
     var universe = new Universe("Solar-System-Starman", 6.67428e-11, size, astros);
-
     var dpatts = [["[s]", 500],
         [0, "img/orbiter/sun/sun1_[s].png"],
         [1, "img/orbiter/mercury/mercury_[s].png"],
@@ -201,36 +238,10 @@ function solarSystemStarman() {
         [1, "img/orbiter/earth/earth_[s].png"], 
         [1, "img/orbiter/mars/mars_[s].png"],
         [2, "img/orbiter/starman/starman_[s].png"]];
-    var ratios = [30, 1500, 10000000000];
-    var speed = 10000;
-
-    return new Orbiter(universe, dpatts, ratios, speed);
-}
-
-function solarSystem() {
-    var size = 3.5 * AU;
-    var cx = size/2;
-    var cy = size/2;
-    var astros = [
-        new Astro("Sun", 1.9885e30, 6.957e8, cx-5.682653841092885E+08, cy+1.112997165528592E+09, -1.446153643855376E-05, -3.447507130430867E-06),
-        new Astro("Mercury", 3.302e23, 2.440e6, cx-1.004302793346122E+10, cy-6.782848247285485E+10, 3.847265155592926E+04, -4.158689546981208E+03),
-        new Astro("Venus", 4.8685e24, 6.05184e6, cx+1.076209595805564E+11, cy+8.974122818036491E+09, -2.693485084259549E+03, 3.476650462014290E+04),
-        new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
-        new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04)];
-    //new Astro("s-Tesla", 1235, 1.5)
-    var universe = new Universe("Solar-System", 6.67428e-11, size, astros);
-
-    var dpatts = [["[s]", 500],
-        [0, "img/orbiter/sun/sun1_[s].png"],
-        [1, "img/orbiter/mercury/mercury_[s].png"],
-        [1, "img/orbiter/venus/venus_[s].png"], 
-        [1, "img/orbiter/earth/earth_[s].png"], 
-        [1, "img/orbiter/mars/mars_[s].png"],
-        [2, "img/orbiter/starman/starman_[s].png"]];
-    var ratios = [30, 1500, 1000000];
-    var speed = 5000;
-
-    return new Orbiter(universe, dpatts, ratios, speed);
+    var ratios = [30, 1500, 7000000000];
+    var stepreps = 20000;
+    var stepinterval = 10;
+    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
 }
  
 const AU = 1.495978707e11;

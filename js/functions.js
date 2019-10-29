@@ -21,6 +21,21 @@ function loadHTML(file) {
     return req.responseText;
 }
 
+function fullDateToString(date) {
+    var zero = function(val) {
+        return (val < 10) ? "0" + val : val;
+    }
+    return date.getUTCFullYear() + "/" + zero(date.getUTCMonth()) + "/" + zero(date.getUTCDate()) +
+    " " + zero(date.getUTCHours()) + ":" + zero(date.getUTCMinutes()) + ":" + zero(date.getUTCSeconds());
+}
+
+function dateToString(date) {
+    var zero = function(val) {
+        return (val < 10) ? "0" + val : val;
+    }
+    return date.getUTCFullYear() + "/" + zero(date.getUTCMonth()) + "/" + zero(date.getUTCDate());
+}
+
 function storePersistent(key, value, expiration) {
     if (localStorage) {
         localStorage.setItem(key, value);
