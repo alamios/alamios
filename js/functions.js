@@ -76,9 +76,9 @@ function parseCookie(key) {
     var cookies = document.cookie;
     if (cookies.includes(";")) {
         var carray = cookies.split(";");
-        for (var i=0; i<carray.length; i++) {
-            if (carray[i].includes(key)) {
-                return carray[i].split("=")[1];
+        for (var cookie of carray) {
+            if (cookie.includes(key)) {
+                return cookie.split("=")[1];
             }
         }
     }

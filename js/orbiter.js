@@ -57,8 +57,8 @@ class Universe {
                 Astro.interact(this.astros[i], this.astros[j], this.gravity);
             }
         }    
-        for (var i=0; i<this.astros.length; i++) {
-            this.astros[i].move();
+        for (var astro of this.astros) {
+            astro.move();
         }
     } 
 }
@@ -154,7 +154,7 @@ class Orbiter {
         }	
     }
     step() {
-        for (var z=0; z<this.stepreps; z++) {
+        for (var i=0; i<this.stepreps; i++) {
             this.universe.interact();
         }
         this.draw();
