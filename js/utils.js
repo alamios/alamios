@@ -2,7 +2,7 @@ var bname = getBrowser().name.toLowerCase();
 if (bname == "ie")
     alert(errorMessage());
 
-var scElems = [solarSystem, solarSystemStarman];
+var scElems = [solarSystemStarman];
 var scIndex = randomIndex();
 var scCurrent = undefined;
 
