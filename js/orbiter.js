@@ -136,11 +136,11 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
-
-        var lazyimgs = document.querySelectorAll('[data-lazysrc]');
-        for (var img of lazyimgs) {
-            img.src = img.dataset.lazysrc;
-        }
+        setTimeout(function(){
+            var lazyimgs = document.querySelectorAll('[data-lazysrc]');
+            for (var img of lazyimgs) {
+                img.src = img.dataset.lazysrc;
+            }}, 3000);
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
