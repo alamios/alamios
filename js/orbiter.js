@@ -93,7 +93,7 @@ class Orbiter {
         var sep = document.createElement("span");
         var xsep = document.createElement("span");
         
-        sysname.innerHTML = universe.name.replace(new RegExp("-", "g"), " ");
+        sysname.innerHTML = universe.name;
         sysspeed.innerHTML = " Speed x" + this.speed;
         sysdate.innerHTML = " Date ";
         sep.innerHTML = " | ";
@@ -112,7 +112,7 @@ class Orbiter {
         for (var i=0; i<universe.astros.length; i++) {
             var astroname = document.createElement("span");
             var astrozoom = document.createElement("span");
-            astroname.innerHTML = universe.astros[i].name.replace(new RegExp("-", "g"), " ");
+            astroname.innerHTML = universe.astros[i].name;
             astrozoom.innerHTML = ratios[dpatts[i+1][0]];    
             
             sysinfo2.append(astroname);
@@ -136,6 +136,11 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
+
+        var lazyimgs = document.querySelectorAll('[data-lazysrc]');
+        for (var img of lazyimgs) {
+            img.src = img.dataset.lazysrc;
+        }
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -206,7 +211,7 @@ function solarSystem() {
         new Astro("Venus", 4.8685e24, 6.05184e6, cx+1.076209595805564E+11, cy+8.974122818036491E+09, -2.693485084259549E+03, 3.476650462014290E+04),
         new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
         new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04)];
-    var universe = new Universe("Solar-System", 6.67428e-11, size, astros);
+    var universe = new Universe("Solar System", 6.67428e-11, size, astros);
     var dpatts = [["[s]", 500],
         [0, "img/orbiter/sun/sun1_[s].png"],
         [1, "img/orbiter/mercury/mercury_[s].png"],
@@ -230,7 +235,7 @@ function solarSystemStarman() {
         new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
         new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04),
         new Astro("Starman", 1.305e3, 1.974, cx-6.364150296583878E+10, cy-1.996812140241804E+11, 2.064456758866443E+04, -1.283240781976068E+04)];
-    var universe = new Universe("Solar-System-Starman", 6.67428e-11, size, astros);
+    var universe = new Universe("Solar System +Starman", 6.67428e-11, size, astros);
     var dpatts = [["[s]", 500],
         [0, "img/orbiter/sun/sun1_[s].png"],
         [1, "img/orbiter/mercury/mercury_[s].png"],
