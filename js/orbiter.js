@@ -64,7 +64,9 @@ class Universe {
 }
 
 class Orbiter {
-    constructor(universe, dpatts, ratios, stepreps, stepinterval) {
+    constructor(universe, dpatts, ratios, stepreps, stepinterval, container) {
+        replaceHTML(container, "html/orbiter.html");
+            
         this.universe = universe;
         this.dpatts = dpatts;
         this.ratios = ratios;
@@ -127,6 +129,7 @@ class Orbiter {
         var creditlink = document.querySelectorAll("#orbiter .credit-link");
         creditlink[0].addEventListener('click', function(evt) {
             this.stop();
+            // lazyImageLoad();
             this.display.style.display = "none";
             this.credits.style.display = "block";
         }.bind(this));
@@ -136,11 +139,6 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
-        setTimeout(function(){
-            var lazyimgs = document.querySelectorAll('[data-lazysrc]');
-            for (var img of lazyimgs) {
-                img.src = img.dataset.lazysrc;
-            }}, 5000);
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -201,7 +199,7 @@ class Orbiter {
     }
 }
 
-function solarSystem() {
+function solarSystem(container) {
     var size = 3.5 * AU;
     var cx = size/2;
     var cy = size/2;
@@ -221,10 +219,10 @@ function solarSystem() {
     var ratios = [30, 1500];
     var stepreps = 20000;
     var stepinterval = 10;
-    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
+    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval, container);
 }
 
-function solarSystemStarman() {
+function solarSystemStarman(container) {
     var size = 3.5 * AU;
     var cx = size/2;
     var cy = size/2;
@@ -235,7 +233,7 @@ function solarSystemStarman() {
         new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
         new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04),
         new Astro("Starman", 1.305e3, 1.974, cx-6.364150296583878E+10, cy-1.996812140241804E+11, 2.064456758866443E+04, -1.283240781976068E+04)];
-    var universe = new Universe("Solar System +Starman", 6.67428e-11, size, astros);
+    var universe = new Universe("Solar System", 6.67428e-11, size, astros);
     var dpatts = [["[s]", 500],
         [0, "img/orbiter/sun/sun1_[s].png"],
         [1, "img/orbiter/mercury/mercury_[s].png"],
@@ -246,7 +244,14 @@ function solarSystemStarman() {
     var ratios = [30, 1500, 7000000000];
     var stepreps = 20000;
     var stepinterval = 10;
-    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
+    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval, container);
+}
+
+function test(container) {
+    var v = { 
+        start : function() {console.log("start")}, 
+        stop : function() {console.log("stop")}};
+    return v;
 }
  
 const AU = 1.495978707e11;
