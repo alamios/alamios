@@ -139,6 +139,8 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
+        
+        lazyImageLoad();
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);

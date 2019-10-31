@@ -26,7 +26,6 @@ function togglePage(page) {
             toggleShowcase();
     }
     
-    lazyImageLoad();
     toggleLang();
     storeSession("currpage", page);
 }
