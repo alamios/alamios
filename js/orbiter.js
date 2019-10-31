@@ -139,8 +139,6 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
-        
-        lazyImageLoad();
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -170,10 +168,18 @@ class Orbiter {
         this.canvas.style.width = smaller + "px";
         this.canvas.style.height = smaller + "px";          
         this.sizes[0] = [this.universe.size / smaller];
+        var loads = 0;
         for (var i=0; i<this.universe.astros.length; i++) {
             var zoom = this.ratios[this.dpatts[i+1][0]];
             this.sizes[i+1] = this.universe.astros[i].radius * zoom / this.sizes[0];
             this.images[i] = new Image();
+            if (!this.running) {
+                this.images[i].addEventListener("load", function() {
+                    loads++;
+                    if (loads == this.universe.astros.length)
+                        lazyImageLoad();
+                }.bind(this));
+            }
             var size = Math.round(this.sizes[i+1] * 2);
             var done = false;
             while (!done) {
