@@ -140,7 +140,7 @@ class Orbiter {
             this.start();
         }.bind(this));
         
-        setTimeout(lazyImageLoad, 1);
+        setTimeout(lazyImageLoad, 1000);
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
