@@ -246,5 +246,13 @@ function solarSystemStarman(container) {
     var stepinterval = 10;
     return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval, container);
 }
+
+function test(container) {
+    var v = { 
+        container : document.createElement("span"),
+        start : function() {console.log("start")}, 
+        stop : function() {console.log("stop")}};
+    return v;
+}
  
 const AU = 1.495978707e11;
