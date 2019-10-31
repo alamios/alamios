@@ -139,6 +139,8 @@ class Orbiter {
             this.display.style.display = "block";
             this.start();
         }.bind(this));
+        
+        lazyImageLoad();
     }
     draw() {	
         this.ctxt.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -245,14 +247,6 @@ function solarSystemStarman(container) {
     var stepreps = 20000;
     var stepinterval = 10;
     return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval, container);
-}
-
-function test(container) {
-    var v = { 
-        container : document.createElement("span"),
-        start : function() {console.log("start")}, 
-        stop : function() {console.log("stop")}};
-    return v;
 }
  
 const AU = 1.495978707e11;
