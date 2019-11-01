@@ -2,7 +2,7 @@ var bname = getBrowser().name.toLowerCase();
 if (bname == "ie")
     alert(errorMessage());
 
-var scElems = [solarSystemStarman];
+var scElems = [solarSystem];
 var scIndex = Math.floor(Math.random() * scElems.length);
 var scCurrent = undefined;
 
@@ -26,7 +26,7 @@ function togglePage(page) {
 }
 
 function toggleShowcase() {
-    scCurrent = scElems[scIndex]("main");
+    scCurrent = scElems[scIndex](document.getElementById("main"));
     scCurrent.display.addEventListener('dblclick', function(evt) {
         if (window.getSelection)
             window.getSelection().removeAllRanges();
@@ -40,7 +40,8 @@ function toggleShowcase() {
         togglePage("home");
     });
     window.addEventListener('resize', function(evt) {
-        scCurrent.resize();
+        if (scCurrent != undefined)
+            scCurrent.resize();
     });
     scCurrent.start();
 }

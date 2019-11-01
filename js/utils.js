@@ -28,7 +28,7 @@ function lazyImageLoad() {
     }
 }
 
-function fullDateToString(date) {
+function fullDateToStringUTC(date) {
     var zero = function(val) {
         return (val < 10) ? "0" + val : val;
     }
@@ -36,7 +36,7 @@ function fullDateToString(date) {
     " " + zero(date.getUTCHours()) + ":" + zero(date.getUTCMinutes()) + ":" + zero(date.getUTCSeconds());
 }
 
-function dateToString(date) {
+function dateToStringUTC(date) {
     var zero = function(val) {
         return (val < 10) ? "0" + val : val;
     }
