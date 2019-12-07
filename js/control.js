@@ -9,14 +9,15 @@ var scCurrent = undefined;
 togglePage(retrieveSession('currpage'));
 
 
+
 function togglePage(page) {
     nextShowcase();
     switch (page) {
         case "projects":
-            replaceHTML("main", "html/projects.html");
+            loadHTML(false, "html/projects.html", "#main");
             break;
         case "about":
-            replaceHTML("main", "html/about.html");
+            loadHTML(false, "html/about.html", "#main");
             break;
         default:
             toggleShowcase();

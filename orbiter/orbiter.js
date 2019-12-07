@@ -6,11 +6,19 @@
  *
  */
 
-class Astro {
-    constructor(name, mass, radius, x, y, vx, vy) {
+class AstroDefinition {
+    constructor(name, mass, radius) {
         this.name = name;
         this.mass = mass;
         this.radius = radius;
+    }
+}
+
+class Astro {
+    constructor(definition, x, y, vx, vy) {
+        this.name = definition.name;
+        this.mass = definition.mass;
+        this.radius = definition.radius;
         this.x = x;
         this.y = y;
         this.vx = vx;
@@ -74,9 +82,8 @@ class Orbiter {
         this.sizes = [];
         this.images = [];
         this.speed = stepreps * (1000 / stepinterval);
-        this.date = new Date(Date.UTC(2020, 1));
-        this.dateFn = (this.speed > 86400) ? dateToStringUTC : fullDateToStringUTC;
-
+        this.date = new Date(Date.UTC(2020));
+        this.date.dateFn = (this.speed > 86400) ? this.date.toCommonUTCDateString : this.date.toCommonUTCString;
         this.wrapper = document.getElementById("orbiter");
         this.display = document.querySelectorAll("#orbiter .display")[0];
         this.credits = document.querySelectorAll("#orbiter .credits")[0];
@@ -123,7 +130,7 @@ class Orbiter {
             }
         }
 
-        this.sysdate.innerHTML = this.dateFn(this.date);
+        this.sysdate.innerHTML = this.date.dateFn();
         this.credits.style.display = "none";
         var creditlink = document.querySelectorAll("#orbiter .credit-link");
         creditlink[0].addEventListener('click', function(evt) {
@@ -155,7 +162,7 @@ class Orbiter {
         }
         this.draw();
         this.date.setSeconds(this.date.getSeconds() + this.stepreps);
-        this.sysdate.innerHTML = this.dateFn(this.date);
+        this.sysdate.innerHTML = this.date.dateFn();
     }
     resize() {
         var smaller = this.canvas.parentElement.clientWidth;
@@ -210,15 +217,15 @@ function solarSystem(container) {
     var cx = size/2;
     var cy = size/2;
     var astros = [
-        new Astro("Sun", 1.9885e30, 6.957e8, cx-5.682653841092885E+08, cy+1.112997165528592E+09, -1.446153643855376E-05, -3.447507130430867E-06),
-        new Astro("Mercury", 3.302e23, 2.440e6, cx-1.004302793346122E+10, cy-6.782848247285485E+10, 3.847265155592926E+04, -4.158689546981208E+03),
-        new Astro("Venus", 4.8685e24, 6.05184e6, cx+1.076209595805564E+11, cy+8.974122818036491E+09, -2.693485084259549E+03, 3.476650462014290E+04),
-        new Astro("Earth", 5.97219e24, 6.378137e6, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
-        new Astro("Mars", 6.4171e23, 3.38992e6, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04),
-        new Astro("Starman", 1.305e3, 1.974, cx-6.364150296583878E+10, cy-1.996812140241804E+11, 2.064456758866443E+04, -1.283240781976068E+04)];
-    var universe = new Universe("Solar System", 6.67428e-11, size, astros);
+        new Astro(SUN, cx-5.682653841092885E+08, cy+1.112997165528592E+09, -1.446153643855376E-05, -3.447507130430867E-06),
+        new Astro(MERCURY, cx-1.004302793346122E+10, cy-6.782848247285485E+10, 3.847265155592926E+04, -4.158689546981208E+03),
+        new Astro(VENUS, cx+1.076209595805564E+11, cy+8.974122818036491E+09, -2.693485084259549E+03, 3.476650462014290E+04),
+        new Astro(EARTH, cx-2.545323708273825E+10, cy+1.460913442868109E+11, -2.986338200235307E+04, -5.165822246700293E+03),
+        new Astro(MARS, cx-1.980535522170065E+11, cy-1.313944334060654E+11, 1.439273929359666E+04, -1.805004074289640E+04),
+        new Astro(STARMAN, cx-6.364150296583878E+10, cy-1.996812140241804E+11, 2.064456758866443E+04, -1.283240781976068E+04)];
+    var universe = new Universe("Solar System", GRAVITY, size, astros);
 
-    container.innerHTML = loadHTML("orbiter/orbiter.html");
+    loadHTML(false, "orbiter/orbiter.html", container);
     var dpatts = [["[s]", 500],
         [0, "orbiter/img/sun/sun1_[s].png"],
         [1, "orbiter/img/mercury/mercury_[s].png"],
@@ -231,5 +238,36 @@ function solarSystem(container) {
     var stepinterval = 10;
     return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
 }
+
+function binarySystem(container) {
+    var size = 8 * AU;
+    var cx = size/2;
+    var cy = size/2;
+    var astros = [
+        new Astro(SUN, cx+1.0E+10, cy, 0, 1.5E+04),
+        new Astro(CYGNI61B, cx-2.0E+11, cy, 0, -2.5E+04)];
+    var universe = new Universe("Binary System", GRAVITY, size, astros);
+
+    loadHTML(false, "orbiter/orbiter.html", container);
+    var dpatts = [["[s]", 500],
+        [0, "orbiter/img/sun/sun1_[s].png"],
+        [0, "orbiter/img/sun/sun2_[s].png"]];
+    var ratios = [50, 1500];
+    var stepreps = 20000;
+    var stepinterval = 10;
+    return new Orbiter(universe, dpatts, ratios, stepreps, stepinterval);
+}
  
 const AU = 1.495978707e11;
+const GRAVITY = 6.67428e-11;
+
+const SUN = new AstroDefinition("Sun", 1.9885e30, 6.957e8);
+const MERCURY = new AstroDefinition("Mercury", 3.302e23, 2.440e6);
+const VENUS = new AstroDefinition("Venus", 4.8685e24, 6.05184e6);
+const EARTH = new AstroDefinition("Earth", 5.97219e24, 6.378137e6);
+const MARS = new AstroDefinition("Mars", 6.4171e23, 3.38992e6);
+const STARMAN = new AstroDefinition("Starman", 1.305e3, 1.974);
+
+const PROXIMA = new AstroDefinition("Proxima Centauri", SUN.mass*0.1221, SUN.radius*0.1542);
+const BELLATRIX = new AstroDefinition("Bellatrix", SUN.mass*8.6, SUN.radius*5.75);
+const CYGNI61B = new AstroDefinition("61 Cygni B", SUN.mass*0.63, SUN.radius*0.595);
