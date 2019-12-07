@@ -1,3 +1,47 @@
+
+function insertHTML(content, target, replace=true) {
+    function rep(content, target, replace) {
+        if (replace)
+            target.innerHTML = content;
+        else
+            target.innerHTML = target.innerHTML + content;
+    }
+    if (typeof(target) === 'string' || target instanceof String)
+        target = document.querySelectorAll(target);
+    if (isIterable(target))
+        for (t of target)
+            rep(content, t, replace);
+    else
+        rep(content, target, replace);
+}
+
+function loadHTML(async, url, target, replace=true) {
+    if (async) {
+        loadURLAsync(url, insertHTML, target, replace);
+    }
+    else {
+        insertHTML(loadURL(url), target, replace);
+    }
+}
+
+function loadURLAsync(url, callback, ...args) {
+    var req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    req.onreadystatechange = function (evt) {
+        if (req.readyState == 4 && req.status == 200) {
+            callback(req.responseText, ...args);
+        }
+    };
+    req.send(null); 
+}
+
+function loadURL(url) {
+    var req = new XMLHttpRequest();
+    req.open("GET", url, false);
+    req.send();
+    return req.responseText;
+}
+
 function urlExists(url) {
     var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
@@ -5,20 +49,13 @@ function urlExists(url) {
     return http.status != 404;
 }
 
-function replaceHTML(targetID, file) {
-    document.getElementById(targetID).innerHTML = loadHTML(file);
+function openInNewTab(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
 }
 
-function insertHTML(targetID, file) {
-    var target = document.getElementById(targetID);
-    target.innerHTML = target.innerHTML + loadHTML(file);
-}
-
-function loadHTML(file) {
-    var req = new XMLHttpRequest();
-    req.open("GET", file, false);
-    req.send();
-    return req.responseText;
+function isIterable(value) {
+    return Symbol.iterator in Object(value);
 }
 
 function lazyImageLoad() {
@@ -26,21 +63,6 @@ function lazyImageLoad() {
     for (var img of lazyimgs) {
         img.src = img.dataset.lazysrc;
     }
-}
-
-function fullDateToStringUTC(date) {
-    var zero = function(val) {
-        return (val < 10) ? "0" + val : val;
-    }
-    return date.getUTCFullYear() + "/" + zero(date.getUTCMonth()) + "/" + zero(date.getUTCDate()) +
-    " " + zero(date.getUTCHours()) + ":" + zero(date.getUTCMinutes()) + ":" + zero(date.getUTCSeconds());
-}
-
-function dateToStringUTC(date) {
-    var zero = function(val) {
-        return (val < 10) ? "0" + val : val;
-    }
-    return date.getUTCFullYear() + "/" + zero(date.getUTCMonth()) + "/" + zero(date.getUTCDate());
 }
 
 function storePersistent(key, value, expiration) {
@@ -215,3 +237,46 @@ function setContentSelection(target, text) {
         }
     }
 }
+
+String.prototype.pad = function(length, char=" ") {
+    var str = this;
+    while (str.length < length) 
+        str = char + str;
+    return str;
+};
+
+Number.prototype.pad = function(length, char=0) {
+    return this.toString().pad(length, char);
+};
+
+Date.prototype.toCommonDateString = function(sep="/") {
+    return this.getFullYear().pad(4) + 
+    sep + (this.getMonth()+1).pad(2) +
+    sep + this.getDate().pad(2);
+};
+
+Date.prototype.toCommonTimeString = function(sep=":") {
+    return this.getHours().pad(2) +
+    sep + this.getMinutes().pad(2) +
+    sep + this.getSeconds().pad(2);
+};
+
+Date.prototype.toCommonString = function(datesep="/", timesep=":", strsep=" ") {
+    return this.toCommonDateString(datesep) + strsep + this.toCommonTimeString(timesep);
+};
+
+Date.prototype.toCommonUTCDateString = function(sep="/") {
+    return this.getUTCFullYear().pad(4) + 
+    sep + (this.getUTCMonth()+1).pad(2) +
+    sep + this.getUTCDate().pad(2);
+};
+
+Date.prototype.toCommonUTCTimeString = function(sep=":") {
+    return this.getUTCHours().pad(2) +
+    sep + this.getUTCMinutes().pad(2) +
+    sep + this.getUTCSeconds().pad(2);
+};
+
+Date.prototype.toCommonUTCString = function(datesep="/", timesep=":", strsep=" ") {
+    return this.toCommonUTCDateString(datesep) + strsep + this.toCommonUTCTimeString(timesep);
+};
