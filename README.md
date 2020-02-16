@@ -2,7 +2,7 @@
 
 ## License
 <pre><code>alamios GitHub page
-Copyright (C) 2019, Oscar Alonso Amigo
+Copyright (C) 2019-2020, Oscar Alonso Amigo
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
