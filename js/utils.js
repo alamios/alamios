@@ -49,6 +49,42 @@ function urlExists(url) {
     return http.status != 404;
 }
 
+function getFavicon(url) {
+    return url.match(/^https?\:\/\/([^\/?#]+)/)[0] + "/favicon.ico";
+}
+
+function getFaviconAlt(url) {
+    return "http://s2.googleusercontent.com/s2/favicons?domain_url=" + url;
+}
+
+function setFavicon(link, width, src) {
+    var iconimg = document.createElement("img");
+    iconimg.setAttribute('width', width + "px");
+    iconimg.setAttribute('height', "auto");
+    var text = " " + link.textContent;
+    link.textContent = "";
+    link.append(iconimg);
+    link.append(text);
+    var url = link.getAttribute("href");
+    if (src == undefined) {
+        iconimg.onerror = function() {
+            this.onerror = null;
+            this.src = getFaviconAlt(url);
+        }
+        iconimg.src = getFavicon(url);
+    }
+    else {
+        iconimg.onerror = function() {
+            this.onerror = function() {
+                this.onerror = null;
+                this.src = getFaviconAlt(url);
+            }
+            this.src = getFavicon(url);
+        }
+        iconimg.src = src;
+    }
+}
+
 function openInNewTab(url) {
     var win = window.open(url, '_blank');
     win.focus();
