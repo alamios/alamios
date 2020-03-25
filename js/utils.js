@@ -61,7 +61,8 @@ function setFavicon(link, width, src) {
     var iconimg = document.createElement("img");
     iconimg.setAttribute('width', width + "px");
     iconimg.setAttribute('height', "auto");
-    var text = " " + link.textContent;
+    iconimg.classList.add("icon");
+    var text = link.textContent;
     link.textContent = "";
     link.append(iconimg);
     link.append(text);
