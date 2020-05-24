@@ -1,7 +1,7 @@
 # Personal page
 
 ## License
-<pre><code>alamios GitHub page
+<pre><code>alamios personal page
 Copyright (C) 2019-2020, alamios
 
 This program is free software: you can redistribute it and/or modify
