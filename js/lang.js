@@ -1,12 +1,12 @@
 function switchLangCommon() {
     if (window.rqlang == "es") {
         setContentSelection("#header .nav-item", ["Inicio", "Proyectos", "Sobre mi", "Contacto"]);
-        setContentID("bio", "Desarrollador de Software y aprendiz de Web");
+        setContentID("bio", "Desarrollador de Software y Web");
         setContentID("design", "Diseñado por");
     }
     else {
         setContentSelection("#header .nav-item", ["Home", "Projects", "About", "Contact"]);
-        setContentID("bio", "Software developer and Web learner");
+        setContentID("bio", "Software and Web developer");
         setContentID("design", "Designed by");
     }
 }

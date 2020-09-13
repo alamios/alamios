@@ -3,6 +3,7 @@ if (bname == "ie")
     alert(errorMessage());
 
 var scElems = [solarSystem];
+var scPaths = ["orbiter"];
 var scIndex = Math.floor(Math.random() * scElems.length);
 var scCurrent = undefined;
 
@@ -27,7 +28,7 @@ function togglePage(page) {
 }
 
 function toggleShowcase() {
-    scCurrent = scElems[scIndex](document.getElementById("main"));
+    scCurrent = scElems[scIndex](document.getElementById("main"), "lib/"+scPaths[scIndex]);
     scCurrent.display.addEventListener('dblclick', function(evt) {
         if (window.getSelection)
             window.getSelection().removeAllRanges();
