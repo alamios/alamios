@@ -1,0 +1,6 @@
+[submodule "lib/js-utils"]
+	path = lib/js-utils
+	url = https://github.com/alamios/js-utils.git
+[submodule "lib/orbiter"]
+	path = lib/orbiter
+	url = https://github.com/alamios/orbiter.git
