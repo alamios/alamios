@@ -16,6 +16,7 @@ function togglePage(page) {
     switch (page) {
         case "projects":
             loadHTML(false, "html/projects.html", "#main");
+            loadURLAsync('https://api.github.com/users/alamios/repos', parseProjects)
             break;
         case "about":
             loadHTML(false, "html/about.html", "#main");
@@ -53,6 +54,25 @@ function nextShowcase() {
         scCurrent.stop();
         scIndex = (scIndex < scElems.length-1) ? scIndex + 1 : 0;
         scCurrent = undefined;
+    }
+}
+
+function parseProjects(projects) {
+    var proj = JSON.parse(projects);
+    var cont = document.getElementById("projects");
+    for (var p of proj) {
+        var pcont = document.createElement("a");
+        var title = document.createElement("h2");
+        var desc = document.createElement("p");
+        title.textContent = p["name"];
+        desc.textContent = p["description"];
+        pcont.href = p["html_url"];
+        pcont.append(title);
+        pcont.append(desc);
+        cont.append(pcont);
+        pcont.classList.add("pcont");
+        title.classList.add("ptitle");
+        desc.classList.add("pdesc");
     }
 }
 
