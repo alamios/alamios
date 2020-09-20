@@ -1,20 +1,18 @@
 #about {  
-    display: flex;
+    /* display: flex;
     flex-flow: row wrap;
-    align-items: center;
-    max-width: 800px;
+    align-items: center; */
     margin: auto;
-    padding: 30px 20px;
+    padding: 30px 30px;
 }
 #about article {
-    flex: 1;
-    display: flex;
-    flex-flow: column wrap;
+    max-width: 600px;
 }
 #about aside {
-    flex: 0 0 250px;
+    /* flex: 0 0 250px; */
 }
 #about .intro {
+    margin-bottom: 10px;
 }
 #about .text {
     margin-top: 10px;
