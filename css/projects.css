@@ -7,12 +7,12 @@
 }
 
 .pcont {
-    border: 1px solid rgb(53, 53, 53);
+    border: 2px solid rgb(50, 50, 50);
     border-radius: 5px;
     padding: 15px;
     margin: 10px 10px;
     display: inline-block;
-    width: calc(100% - 53px);
+    width: calc(100% - 55px);
 }
 
 .ptitle {
@@ -21,6 +21,6 @@
 
 @media only screen and (min-width: 900px) {
     .pcont {
-        width: calc(50% - 53px);
+        width: calc(50% - 55px);
     }
 } 
